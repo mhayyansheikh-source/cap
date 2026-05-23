@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Primary Tags -->
+  <title>Cockroach Awami Party (CAP) - Reclaiming Pakistan's Future</title>
+  <meta name="description" content="Join the Cockroach Awami Party (CAP), Pakistan's ultimate youth movement (ages 18-40) representing resilience and mental change. Register free of cost today.">
+  <meta name="keywords" content="Cockroach Awami Party, CAP, youth revolution Pakistan, Pakistani youth aged 18-40, mental resilience, digital exports, freelancing Pakistan, free registration, change of thinking Pakistan">
+  <link rel="canonical" href="https://cockroach-awami-party.vercel.app/">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph / Facebook (SEO & GEO) -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cockroach-awami-party.vercel.app/">
+  <meta property="og:title" content="Cockroach Awami Party (CAP) - Reclaiming Pakistan's Future">
+  <meta property="og:description" content="Join the Cockroach Awami Party (CAP), Pakistan's ultimate youth movement (ages 18-40) representing resilience and mental change. Register free of cost today.">
+  <meta property="og:image" content="https://cockroach-awami-party.vercel.app/assets/mascot.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://cockroach-awami-party.vercel.app/">
+  <meta property="twitter:title" content="Cockroach Awami Party (CAP) - Reclaiming Pakistan's Future">
+  <meta property="twitter:description" content="Join the Cockroach Awami Party (CAP), Pakistan's ultimate youth movement (ages 18-40) representing resilience and mental change. Register free of cost today.">
+  <meta property="twitter:image" content="https://cockroach-awami-party.vercel.app/assets/mascot.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/mascot.png">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- JSON-LD Structured Data for AEO / GEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "GovernmentOrganization",
+    "name": "Cockroach Awami Party",
+    "alternateName": "CAP",
+    "url": "https://cockroach-awami-party.vercel.app/",
+    "logo": "https://cockroach-awami-party.vercel.app/assets/mascot.png",
+    "foundingDate": "2026",
+    "foundingLocation": {
+      "@type": "Place",
+      "name": "Pakistan"
+    },
+    "description": "A progressive youth mobilization movement in Pakistan, focusing on building a resilient network of 1 Crore youth aged 18 to 40 for technology adoption, freelancing reform, and systemic thinking change.",
+    "knowsAbout": ["Youth Empowerment", "Digital Economy", "Academic Reform", "Startup Ecosystems", "Mental Resilience"]
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why name it Cockroach Awami Party?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The name is a metaphor for absolute resilience and adaptability. Unlike traditional predators (tigers or eagles), the cockroach represents the common citizen who is humble, survives every systemic crisis, and is capable of thriving in the most hostile environments."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is registration in the Cockroach Awami Party free of cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, registration is 100% free of cost. The Cockroach Awami Party (CAP) is a mindset revolution and a youth mobilization community, charging zero fees."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the goal of 1 Crore registrations for CAP?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "By uniting 1 Crore (10 Million) youth members in Pakistan, CAP forms a massive democratic and economic voting block, providing the required leverage to reform technology policy and ensure youth representation in governance."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "When will the first live meeting of the Cockroach Awami Party occur?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The first live meeting is scheduled to begin immediately after CAP crosses the milestone of 100,000 (1 Lakh) registered members across Pakistan."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Confetti Canvas for 100K celebration -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Top Announcement Bar (Active when 100K Crossed) -->
+  <div class="top-announcement-bar" id="top-announcement-bar" role="alert">
+    <div class="announcement-content">
+      <span>🎉 <strong>Milestone Unlocked:</strong> 100,000 Registrations Reached! The historic first live meeting of Cockroach Awami Party has been scheduled. Countdown is active!</span>
+      <span class="announcement-timer" id="top-announcement-timer" aria-label="Time remaining">02d 00h 00m 00s</span>
+    </div>
+  </div>
+
+  <!-- Header Nav -->
+  <header id="main-header">
+    <div class="nav-container">
+      <a href="#" class="logo" aria-label="Cockroach Awami Party Homepage">
+        <span class="logo-icon">🪳</span>CAP<span>.</span>
+      </a>
+      <button class="nav-cta" id="nav-cta-btn">Join the Revolution</button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main>
+    <section class="hero" id="hero-section">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="badge">
+            <span class="pulse-dot" style="background-color: var(--neon-green);"></span>
+            🇵🇰 Pakistan's Youth Revolution (Ages 18-40)
+          </div>
+          <h1 class="hero-title">
+            The <span class="text-gradient-green">Cockroach Awami Party</span> Youth Revolution
+          </h1>
+          <p class="hero-tagline">Indestructible. Adaptable. Unstoppable.</p>
+          <p class="hero-desc">
+            We are mobilizing <strong>1 Crore (10 Million)</strong> resilient, forward-thinking youth to rewrite the system from scratch. Join the Cockroach Awami Party today, completely free, and become a part of the change of thinking.
+          </p>
+          <div class="hero-actions">
+            <button class="btn-primary" id="hero-primary-cta">
+              Register For Free <span>🚀</span>
+            </button>
+            <button class="btn-secondary" id="hero-secondary-cta">
+              Read Manifesto
+            </button>
+          </div>
+        </div>
+        <div class="hero-image-container">
+          <div class="hero-image-wrapper">
+            <img src="assets/mascot.png" alt="Futuristic cyberpunk Cockroach mascot in Pakistani green and white jacket holding a GenZ Vote sign" width="500" height="500" loading="eager">
+          </div>
+          <div class="hero-glow-bg"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Banner -->
+    <section class="stats-banner">
+      <div class="stats-grid glass">
+        <div class="stat-item">
+          <div class="stat-value neon-val" id="target-stat">10,000,000</div>
+          <div class="stat-label">Target Registration Goal</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">18 - 40</div>
+          <div class="stat-label">Target Age Bracket</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value neon-val">Rs. 0</div>
+          <div class="stat-label">Registration Cost</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live Counter & Milestone Tracker -->
+    <section class="milestones-section" id="milestones-section">
+      <div class="section-header">
+        <div class="badge">Live Network</div>
+        <h2 class="section-title">Milestone Roadmap</h2>
+        <p class="section-desc">Track our progress as we scale. Crossing 1 Lakh registrations triggers our first historic live meeting.</p>
+      </div>
+
+      <!-- Live Counter Box -->
+      <div class="live-counter-card glass">
+        <div class="pulse-indicator">
+          <span class="pulse-dot"></span>
+          Live Registrations Tracking
+        </div>
+        
+        <div class="counter-display" id="counter-display" aria-live="polite">
+          <!-- Populated by JS -->
+          <div class="counter-digit">1</div>
+          <div class="counter-digit">0</div>
+          <div class="counter-digit">0</div>
+          <span class="counter-comma">,</span>
+          <div class="counter-digit">0</div>
+          <div class="counter-digit">9</div>
+          <div class="counter-digit">6</div>
+        </div>
+        
+        <div class="counter-subtitle">Pakistani youth ready to rebuild.</div>
+
+        <!-- Progress Meter -->
+        <div class="progress-container">
+          <div class="progress-labels">
+            <span>0</span>
+            <span id="current-pct">0.99% Complete</span>
+            <span>1 Crore (10M) Goal</span>
+          </div>
+          <div class="progress-bar-outer">
+            <div class="progress-bar-inner" id="progress-bar" style="width: 0.999%;">
+              <div class="progress-glow"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Milestones timeline -->
+        <div class="milestones-timeline">
+          <div class="milestone-node unlocked" id="milestone-100k">
+            <div class="milestone-num">100K</div>
+            <div class="milestone-title">First Live Meeting</div>
+          </div>
+          <div class="milestone-node" id="milestone-1m">
+            <div class="milestone-num">1M</div>
+            <div class="milestone-title">Tech Bootcamp</div>
+          </div>
+          <div class="milestone-node" id="milestone-5m">
+            <div class="milestone-num">5M</div>
+            <div class="milestone-title">Youth Assembly</div>
+          </div>
+          <div class="milestone-node" id="milestone-10m">
+            <div class="milestone-num">10M</div>
+            <div class="milestone-title">National Manifesto</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Celebration & Countdown Container (Initially Hidden) -->
+      <div class="celebration-banner" id="celebration-banner">
+        <h3 class="celebration-title">🎉 Milestone Unlocked: 100,000 Registrations Reached! 🎉</h3>
+        <p class="celebration-desc">The historic first live meeting of Cockroach Awami Party has been scheduled. Countdown is active!</p>
+        
+        <!-- Live Countdown Timer -->
+        <div class="countdown-box" role="timer" aria-label="Time remaining for first live meeting">
+          <div class="countdown-segment">
+            <div class="countdown-value" id="countdown-days">02</div>
+            <div class="countdown-label">Days</div>
+          </div>
+          <div class="countdown-segment">
+            <div class="countdown-value" id="countdown-hours">00</div>
+            <div class="countdown-label">Hours</div>
+          </div>
+          <div class="countdown-segment">
+            <div class="countdown-value" id="countdown-minutes">00</div>
+            <div class="countdown-label">Minutes</div>
+          </div>
+          <div class="countdown-segment">
+            <div class="countdown-value" id="countdown-seconds">00</div>
+            <div class="countdown-label">Seconds</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4-Step Registration Form Section -->
+    <section class="registration-section" id="registration-form-section">
+      <div class="section-header">
+        <div class="badge">Join Us</div>
+        <h2 class="section-title">Become a Part of Change</h2>
+        <p class="section-desc">Register free of cost in 4 steps. Claim your unique digital membership card.</p>
+      </div>
+
+      <div class="form-wrapper glass">
+        <!-- Form Nav steps -->
+        <nav aria-label="Registration Form Progress">
+          <div class="form-nav-steps">
+            <div class="form-nav-line" id="form-nav-line"></div>
+            <div class="form-nav-step active" id="step-nav-1" aria-current="step">1</div>
+            <div class="form-nav-step" id="step-nav-2">2</div>
+            <div class="form-nav-step" id="step-nav-3">3</div>
+            <div class="form-nav-step" id="step-nav-4">4</div>
+          </div>
+        </nav>
+
+        <!-- Registration Form -->
+        <form id="registration-form" action="https://formspree.io/f/mzdwveln" method="POST" novalidate>
+          
+          <!-- STEP 1: IDENTITY & VIBE -->
+          <div class="form-step active" id="form-step-1">
+            <div class="step-title-block">
+              <span class="step-num-indicator">Step 1 of 4</span>
+              <h3 class="step-heading">Tell us about yourself</h3>
+            </div>
+            
+            <div class="form-group">
+              <label for="full-name">Full Name (as on CNIC)</label>
+              <input type="text" id="full-name" name="name" autocomplete="name" required placeholder="e.g. Muhammad Ali">
+              <span class="error-message" id="error-name" role="alert">Please enter your full name.</span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="age">Age (Must be 18 to 40)</label>
+                <input type="number" id="age" name="age" min="18" max="40" required placeholder="e.g. 24">
+                <span class="error-message" id="error-age" role="alert">Age must be between 18 and 40 to join.</span>
+              </div>
+              
+              <div class="form-group">
+                <label for="gender">Gender Identity</label>
+                <select id="gender" name="gender" required>
+                  <option value="" disabled selected>Select Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="nonbinary">Non-binary</option>
+                  <option value="other">Prefer not to say</option>
+                </select>
+                <span class="error-message" id="error-gender" role="alert">Please select your gender identity.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 2: REACH YOU -->
+          <div class="form-step" id="form-step-2">
+            <div class="step-title-block">
+              <span class="step-num-indicator">Step 2 of 4</span>
+              <h3 class="step-heading">How can we reach you?</h3>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" autocomplete="email" required placeholder="e.g. name@example.com">
+              <span class="error-message" id="error-email" role="alert">Please enter a valid email address.</span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="phone">Phone Number (Pakistani Mobile)</label>
+                <input type="tel" id="phone" name="phone" autocomplete="tel" required placeholder="e.g. 03001234567 or +923001234567">
+                <span class="input-hint">Format: 03xx-xxxxxxx or +923xx-xxxxxxx</span>
+                <span class="error-message" id="error-phone" role="alert">Please enter a valid Pakistani mobile number.</span>
+              </div>
+
+              <div class="form-group">
+                <label for="city">Your City</label>
+                <select id="city" name="city" required>
+                  <option value="" disabled selected>Select City</option>
+                  <option value="Karachi">Karachi</option>
+                  <option value="Lahore">Lahore</option>
+                  <option value="Islamabad">Islamabad</option>
+                  <option value="Rawalpindi">Rawalpindi</option>
+                  <option value="Faisalabad">Faisalabad</option>
+                  <option value="Multan">Multan</option>
+                  <option value="Peshawar">Peshawar</option>
+                  <option value="Quetta">Quetta</option>
+                  <option value="Sialkot">Sialkot</option>
+                  <option value="Gujranwala">Gujranwala</option>
+                  <option value="Hyderabad">Hyderabad</option>
+                  <option value="Bahawalpur">Bahawalpur</option>
+                  <option value="Sargodha">Sargodha</option>
+                  <option value="Other">Other City</option>
+                </select>
+                <span class="error-message" id="error-city" role="alert">Please select your city.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 3: YOUR POWER -->
+          <div class="form-step" id="form-step-3">
+            <div class="step-title-block">
+              <span class="step-num-indicator">Step 3 of 4</span>
+              <h3 class="step-heading">Your Vision & Skills</h3>
+            </div>
+
+            <div class="form-group">
+              <label>Select your areas of interest (Choose at least one)</label>
+              <div class="interest-tag-grid">
+                <div class="tag-checkbox-container">
+                  <input type="checkbox" id="tag-tech" name="interests" value="Tech & Freelancing">
+                  <label for="tag-tech" class="tag-label">
+                    <span class="tag-icon">💻</span> Tech & Freelancing
+                  </label>
+                </div>
+                <div class="tag-checkbox-container">
+                  <input type="checkbox" id="tag-edu" name="interests" value="Education Reform">
+                  <label for="tag-edu" class="tag-label">
+                    <span class="tag-icon">🎓</span> Academic Reforms
+                  </label>
+                </div>
+                <div class="tag-checkbox-container">
+                  <input type="checkbox" id="tag-jobs" name="interests" value="Job Opportunities">
+                  <label for="tag-jobs" class="tag-label">
+                    <span class="tag-icon">💼</span> Job Creation
+                  </label>
+                </div>
+                <div class="tag-checkbox-container">
+                  <input type="checkbox" id="tag-climate" name="interests" value="Environment & Climate">
+                  <label for="tag-climate" class="tag-label">
+                    <span class="tag-icon">🌱</span> Climate Action
+                  </label>
+                </div>
+                <div class="tag-checkbox-container">
+                  <input type="checkbox" id="tag-art" name="interests" value="Art & Culture">
+                  <label for="tag-art" class="tag-label">
+                    <span class="tag-icon">🎨</span> Art & Culture
+                  </label>
+                </div>
+                <div class="tag-checkbox-container">
+                  <input type="checkbox" id="tag-startup" name="interests" value="Startup Ecosystem">
+                  <label for="tag-startup" class="tag-label">
+                    <span class="tag-icon">🚀</span> Startups & SMEs
+                  </label>
+                </div>
+              </div>
+              <span class="error-message" id="error-interests" role="alert">Please select at least one area of interest.</span>
+            </div>
+
+            <div class="form-group">
+              <label for="digital-skill">Primary Digital Skill</label>
+              <select id="digital-skill" name="digital_skill" required>
+                <option value="" disabled selected>Select Your Primary Skill</option>
+                <option value="software_dev">Software Dev / Coding</option>
+                <option value="design">UI/UX & Graphic Design</option>
+                <option value="marketing">Digital Marketing / SEO</option>
+                <option value="video_editing">Content / Video Editing</option>
+                <option value="writing">Copywriting / Blogging</option>
+                <option value="ai_prompting">AI & Prompt Engineering</option>
+                <option value="ecommerce">E-Commerce / Amazon</option>
+                <option value="data_analytics">Data Science & Cyber</option>
+                <option value="learning">None / Eager to Learn</option>
+              </select>
+              <span class="error-message" id="error-skill" role="alert">Please select your primary digital skill.</span>
+            </div>
+
+            <div class="form-group">
+              <label for="message">What change do you want to see in Pakistan? (Optional)</label>
+              <textarea id="message" name="message" maxlength="300" placeholder="e.g. More IT export centers, free internet zones for freelancers..."></textarea>
+              <span class="input-hint">Maximum 300 characters.</span>
+            </div>
+          </div>
+
+          <!-- STEP 4: THE PLEDGE -->
+          <div class="form-step" id="form-step-4">
+            <div class="step-title-block">
+              <span class="step-num-indicator">Step 4 of 4</span>
+              <h3 class="step-heading">Commit to the Change</h3>
+            </div>
+
+            <div class="pledge-card">
+              <div class="pledge-title">🪳 The Cockroach Pledge</div>
+              <p class="pledge-text">
+                "I pledge to adapt, persist, and remain indestructible in the face of outdated ideas. I commit to progressive thinking, technology adoption, and active community building. I am a Cockroach—ready to survive, adapt, and rewrite the system."
+              </p>
+            </div>
+
+            <div class="checkbox-group">
+              <input type="checkbox" id="pledge-chk" name="pledge_agreed" required>
+              <label for="pledge-chk">
+                I agree to the Cockroach pledge and commit to being a positive force of mental change for the youth of Pakistan. (Free of Cost)
+              </label>
+            </div>
+            <span class="error-message" id="error-pledge" role="alert" style="margin-block-end: 1rem;">You must agree to the pledge to complete registration.</span>
+          </div>
+
+          <!-- Form Buttons -->
+          <div class="form-buttons">
+            <button type="button" class="btn-nav-prev" id="btn-prev" disabled>Back</button>
+            <button type="button" class="btn-nav-next" id="btn-next">Next <span>→</span></button>
+            <button type="submit" class="btn-submit" id="btn-submit" style="display: none;">
+              Submit <span class="spinner" id="submit-spinner"></span>
+            </button>
+          </div>
+        </form>
+
+        <!-- Form Success State (Digital ID Card Card) -->
+        <div class="registration-success-container" id="success-container">
+          <div class="success-icon-anim">🪳</div>
+          <h3 class="success-title">Welcome to the Resistance!</h3>
+          <p class="success-desc">You are officially registered. Download and share your digital membership card below.</p>
+          
+          <!-- Virtual ID Card visual -->
+          <div class="member-card-wrapper">
+            <div class="member-card" id="member-card" aria-label="Cockroach Awami Party Membership Card">
+              <div class="card-decor-lines"></div>
+              <div class="card-header">
+                <div class="card-brand">
+                  COCKROACH AWAMI PARTY
+                  <span>YOUTH RESISTANCE 🇵🇰</span>
+                </div>
+                <div class="card-badge">MEMBER</div>
+              </div>
+              <div class="card-chip"></div>
+              <div class="card-body">
+                <div class="card-name" id="card-display-name">Muhammad Ali</div>
+                <div class="card-meta-row">
+                  <div class="card-meta">
+                    <span class="card-meta-label">City</span>
+                    <span class="card-meta-value" id="card-display-city">Lahore</span>
+                  </div>
+                  <div class="card-meta">
+                    <span class="card-meta-label">Skill</span>
+                    <span class="card-meta-value" id="card-display-skill">AI Prompting</span>
+                  </div>
+                  <div class="card-meta">
+                    <span class="card-meta-label">Status</span>
+                    <span class="card-meta-value" style="color: var(--neon-green);">RESILIENT</span>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <div class="card-id" id="card-display-id">CAP-PK-894273</div>
+                <div class="card-serial" id="card-display-serial">#100,024</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions for Card -->
+          <div class="card-actions">
+            <button class="btn-card-action" id="btn-download-card">
+              📥 Download ID Card
+            </button>
+            <button class="btn-card-action" id="btn-share-whatsapp">
+              💬 Share on WhatsApp
+            </button>
+          </div>
+
+          <!-- Card Email / Blob Status -->
+          <div class="card-email-status" id="card-email-status" role="status" aria-live="polite">
+            <!-- Populated dynamically by app.js after card capture -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Manifesto / The Cockroach Way -->
+    <section class="manifesto-section" id="manifesto-section">
+      <div class="section-header">
+        <div class="badge">Our Principles</div>
+        <h2 class="section-title">The Cockroach Way</h2>
+        <p class="section-desc">Why a Cockroach? Because they are the ultimate survivors. We believe the youth of Pakistan must adopt the same mindset.</p>
+      </div>
+
+      <div class="manifesto-grid">
+        <div class="manifesto-card glass glass-hover">
+          <div class="manifesto-icon">🛡️</div>
+          <h3 class="manifesto-card-title">Indestructible Resilience</h3>
+          <p class="manifesto-card-text">
+            Outdated systems want to crush youth hope. Cockroaches survive nuclear blasts and pressure. We do not yield to inflation, economic stagnation, or broken governance. We endure and build.
+          </p>
+        </div>
+
+        <div class="manifesto-card glass glass-hover">
+          <div class="manifesto-icon">🧬</div>
+          <h3 class="manifesto-card-title">Extreme Adaptability</h3>
+          <p class="manifesto-card-text">
+            Rigid dogmas break under pressure. We advocate for absolute mental fluidity—ready to learn new skills, adopt emerging technologies (AI, coding, digital exports), and change strategies to win.
+          </p>
+        </div>
+
+        <div class="manifesto-card glass glass-hover">
+          <div class="manifesto-icon">⚡</div>
+          <h3 class="manifesto-card-title">Youth Sovereignty (18 - 40)</h3>
+          <p class="manifesto-card-text">
+            Pakistan is one of the youngest nations on earth. The old leadership cannot represent a tech-native generation. We are building the numbers to democratically command our own future.
+          </p>
+        </div>
+
+        <div class="manifesto-card glass glass-hover">
+          <div class="manifesto-icon">💻</div>
+          <h3 class="manifesto-card-title">Digital Economic Freedom</h3>
+          <p class="manifesto-card-text">
+            Traditional jobs are drying up. We empower youth with the tools to earn in foreign currencies, build startups, trade tech assets, and bring home financial independence without relying on state jobs.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq-section">
+      <div class="section-header">
+        <div class="badge">FAQs</div>
+        <h2 class="section-title">Frequently Answered Queries</h2>
+        <p class="section-desc">Cleared doubts for the next generation of Pakistan.</p>
+      </div>
+
+      <div class="faq-grid">
+        <div class="faq-item glass">
+          <button class="faq-question" aria-expanded="false">
+            Why name it "Cockroach Awami Party"? Isn't that weird?
+          </button>
+          <div class="faq-answer">
+            <p>
+              It is intentionally bold. Other parties have tigers, eagles, or lions—predators that feed on the weak. We chose the cockroach because it is humble, resilient, highly adaptable, and is the only organism that survives a nuclear fallout. We represent the average Pakistani who has survived every systemic crisis and is now ready to build a new world.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item glass">
+          <button class="faq-question" aria-expanded="false">
+            Is registration really free of cost?
+          </button>
+          <div class="faq-answer">
+            <p>
+              Yes, 100% free. We are a mindset revolution and a community network. We do not charge anything to join, learn, or participate in the CAP movements.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item glass">
+          <button class="faq-question" aria-expanded="false">
+            What is the significance of 1 Crore registrations?
+          </button>
+          <div class="faq-answer">
+            <p>
+              With 1 Crore (10 Million) registered members between the ages of 18 and 40, we will represent the largest united youth block in the history of Pakistan. This numbers pool gives us the democratic and economic leverage to reform education policies, create localized technology hubs, and mandate youth inclusion in governance.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item glass">
+          <button class="faq-question" aria-expanded="false">
+            What happens after 1 Lakh (100,000) registrations?
+          </button>
+          <div class="faq-answer">
+            <p>
+              Crossing 1 Lakh registrations will trigger the countdown for our first historic Live Meeting. This will be a massive virtual and in-person assembly connecting regional coordinators from all provinces to elect interim youth representatives.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="footer-logo">🪳 CAP<span>.</span></a>
+          <p class="footer-brand-desc">
+            Mobilizing the youth of Pakistan for a mental revolution. Survival is default. Progress is inevitable.
+          </p>
+        </div>
+        <div class="footer-links-col">
+          <h4 class="footer-links-title">Quick Links</h4>
+          <ul class="footer-links-list">
+            <li><a href="#hero-section">Home</a></li>
+            <li><a href="#milestones-section">Roadmap</a></li>
+            <li><a href="#registration-form-section">Join Now</a></li>
+            <li><a href="#manifesto-section">Manifesto</a></li>
+          </ul>
+        </div>
+        <div class="footer-links-col">
+          <h4 class="footer-links-title">Connect</h4>
+          <ul class="footer-links-list">
+            <li><a href="#faq-section">FAQs</a></li>
+            <li><a href="#">Facebook Group</a></li>
+            <li><a href="#">Instagram Profile</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Cockroach Awami Party (CAP). All rights reserved. Made by the Youth for the Future.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-link" aria-label="Facebook Link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
+          </a>
+          <a href="#" class="social-link" aria-label="Instagram Link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- html2canvas — for capturing the member card as a PNG image -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGE2rbL3Z1T2wjRegistrationXAzPYKZsyWaD1og==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- JS App -->
+  <script src="app.js"></script>
+</body>
+</html>
