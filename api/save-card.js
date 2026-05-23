@@ -4,7 +4,7 @@
 // No email dependency — notifications are handled entirely on the client side.
 // POST /api/save-card → { ok: true, cardUrl, downloadDeadline, deleteAt }
 
-import { put } from '@vercel/blob';
+import { put, del, list } from '@vercel/blob';
 import { kv } from '@vercel/kv';
 
 const TWENTY_FOUR_H_MS = 24 * 60 * 60 * 1000;
@@ -53,6 +53,30 @@ export default async function handler(req, res) {
       JSON.stringify({ url: blob.url, name, memberId, uploadedAt, downloadDeadline, deleteAt }),
       { ex: 50 * 3600 }
     );
+
+    // ── Lazy Cleanup (20% of requests) ──────────────────────────────────────────
+    if (Math.random() < 0.2) {
+      try {
+        const { blobs } = await list({ prefix: 'cards/' });
+        const now = Date.now();
+        for (const b of blobs) {
+          const bUploadedAt = new Date(b.uploadedAt).getTime();
+          const age = now - bUploadedAt;
+          if (age >= FORTY_EIGHT_H_MS) {
+            await del(b.url);
+            // clean up KV metadata
+            const filenamePart = b.pathname?.split('/')[1] || '';
+            const memberIdMatch = filenamePart.match(/^(CAP-PK-[A-Z0-9]{6})/);
+            if (memberIdMatch) {
+              await kv.del(`blob:${memberIdMatch[1]}`).catch(() => {});
+            }
+            console.log(`[lazy-cleanup] Deleted ${b.url} (age: ${Math.floor(age / 3600000)}h)`);
+          }
+        }
+      } catch (cleanErr) {
+        console.error('[lazy-cleanup error]', cleanErr);
+      }
+    }
 
     return res.status(200).json({
       ok: true,
