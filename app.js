@@ -65,6 +65,9 @@ function scrollToManifesto() {
 document.addEventListener('DOMContentLoaded', () => {
   // Check splash screen state first
   checkSplashState();
+  
+  // Set up live card sync
+  setupLiveCardSync();
 
   const navCtaBtn = document.getElementById('nav-cta-btn');
   const heroPrimaryCta = document.getElementById('hero-primary-cta');
@@ -213,6 +216,39 @@ function updateActiveTierDisplay() {
       formPriceEl.style.color = 'var(--text-gray)';
       formPriceEl.style.borderColor = 'var(--border-glass)';
       formPriceEl.style.background = 'rgba(255, 255, 255, 0.02)';
+    }
+  }
+
+  // Only update card preview elements if the user is NOT registered yet
+  const userRegistration = localStorage.getItem('cap_user_registration');
+  const isRegistered = userRegistration ? JSON.parse(userRegistration).registered : false;
+  
+  if (!isRegistered) {
+    const cardTierEl = document.getElementById('card-display-tier');
+    const cardStatusEl = document.getElementById('card-display-status');
+    const cardBadgeEl = document.getElementById('card-display-badge');
+    
+    if (cardTierEl) {
+      cardTierEl.textContent = activeTier.isFounding ? activeTier.desc : 'Standard';
+      if (activeTier.isFounding) {
+        cardTierEl.style.color = '#ffd700';
+      } else {
+        cardTierEl.style.color = 'var(--text-white)';
+      }
+    }
+    
+    if (cardBadgeEl && cardStatusEl) {
+      if (activeTier.isFounding) {
+        cardBadgeEl.textContent = 'FOUNDING MEMBER';
+        cardBadgeEl.classList.add('badge-founder');
+        cardStatusEl.textContent = 'FOUNDER';
+        cardStatusEl.style.color = '#ffd700';
+      } else {
+        cardBadgeEl.textContent = 'MEMBER';
+        cardBadgeEl.classList.remove('badge-founder');
+        cardStatusEl.textContent = 'RESILIENT';
+        cardStatusEl.style.color = 'var(--neon-green)';
+      }
     }
   }
 }
@@ -473,6 +509,50 @@ function updateCountdown(targetTime) {
 }
 
 
+const SKILL_MAP = {
+  'software_dev':   'Software Dev',
+  'design':         'UI/UX Design',
+  'marketing':      'Digital Marketing',
+  'video_editing':  'Video Editing',
+  'writing':        'Copywriter',
+  'ai_prompting':   'AI Engineering',
+  'ecommerce':      'E-Commerce',
+  'data_analytics': 'Data Science',
+  'learning':       'Youth Learner'
+};
+
+function setupLiveCardSync() {
+  const nameInput = document.getElementById('full-name');
+  const citySelect = document.getElementById('city');
+  const skillSelect = document.getElementById('digital-skill');
+
+  const cardName = document.getElementById('card-display-name');
+  const cardCity = document.getElementById('card-display-city');
+  const cardSkill = document.getElementById('card-display-skill');
+
+  if (nameInput && cardName) {
+    nameInput.addEventListener('input', () => {
+      const val = nameInput.value.trim();
+      cardName.textContent = val || 'Your Name';
+    });
+  }
+
+  if (citySelect && cardCity) {
+    citySelect.addEventListener('change', () => {
+      const val = citySelect.value;
+      cardCity.textContent = val || 'Your City';
+    });
+  }
+
+  if (skillSelect && cardSkill) {
+    skillSelect.addEventListener('change', () => {
+      const val = skillSelect.value;
+      cardSkill.textContent = SKILL_MAP[val] || 'Your Skill';
+    });
+  }
+}
+
+
 // --- 5. Multi-Step Form Coordinator & Validation ---
 const form = document.getElementById('registration-form');
 const steps = document.querySelectorAll('.form-step');
@@ -524,6 +604,8 @@ if (fileInput) {
     reader.onload = (event) => {
       uploadedPhotoBase64 = event.target.result;
       if (photoPreview) photoPreview.src = uploadedPhotoBase64;
+      const cardDisplayPhoto = document.getElementById('card-display-photo');
+      if (cardDisplayPhoto) cardDisplayPhoto.src = uploadedPhotoBase64;
       if (previewContainer) previewContainer.style.display = 'flex';
       if (uploadStatusText) {
         uploadStatusText.textContent = `Selected: ${file.name}`;
@@ -540,6 +622,8 @@ if (btnRemovePhoto) {
     uploadedPhotoBase64 = null;
     if (previewContainer) previewContainer.style.display = 'none';
     if (photoPreview) photoPreview.src = '';
+    const cardDisplayPhoto = document.getElementById('card-display-photo');
+    if (cardDisplayPhoto) cardDisplayPhoto.src = 'assets/mascot.png';
     if (uploadStatusText) {
       uploadStatusText.textContent = 'Upload your photo (JPG, PNG - Max 2MB)';
       uploadStatusText.style.color = 'var(--text-gray)';
@@ -827,18 +911,7 @@ form.addEventListener('submit', async (e) => {
   const interests = [...document.querySelectorAll('input[name="interests"]:checked')]
                       .map(el => el.value);
 
-  const skillMap = {
-    'software_dev':   'Software Dev',
-    'design':         'UI/UX Design',
-    'marketing':      'Digital Marketing',
-    'video_editing':  'Video Editing',
-    'writing':        'Copywriter',
-    'ai_prompting':   'AI Engineering',
-    'ecommerce':      'E-Commerce',
-    'data_analytics': 'Data Science',
-    'learning':       'Youth Learner'
-  };
-  const skillName = skillMap[skillVal] || 'Member';
+  const skillName = SKILL_MAP[skillVal] || 'Member';
 
   try {
     // --- POST to /api/register → Postgres + KV + Formspree relay ---
@@ -930,10 +1003,27 @@ function displayRegistrationSuccess(data) {
   const regFormSection = document.getElementById('registration-form-section');
   if (regFormSection) regFormSection.style.display = 'block';
 
-  // Hide form content
+  // Transition layout to success view
+  const layoutContainer = document.getElementById('registration-layout-container');
+  if (layoutContainer) layoutContainer.classList.add('is-success');
+
+  // Change preview badge to official status
+  const previewBadge = document.getElementById('card-preview-badge');
+  if (previewBadge) {
+    previewBadge.innerHTML = '<span class="preview-dot"></span> Official Member Card';
+    previewBadge.classList.add('official');
+  }
+
+  // Reveal download and share actions
+  const cardActions = document.getElementById('preview-card-actions');
+  if (cardActions) cardActions.style.display = 'flex';
+
+  // Hide form content, navigation and price badge
   form.style.display = 'none';
-  const formNavSteps = document.querySelector('.form-nav-steps');
+  const formNavSteps = document.getElementById('registration-form-nav');
   if (formNavSteps) formNavSteps.style.display = 'none';
+  const formPriceEl = document.getElementById('registration-active-price');
+  if (formPriceEl) formPriceEl.style.display = 'none';
 
   // Fill member card visual fields
   document.getElementById('card-display-name').textContent = data.name;
