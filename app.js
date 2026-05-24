@@ -25,7 +25,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const heroSecondaryCta = document.getElementById('hero-secondary-cta');
 
   if (navCtaBtn) navCtaBtn.addEventListener('click', scrollToForm);
-  if (heroPrimaryCta) heroPrimaryCta.addEventListener('click', scrollToForm);
+  if (heroPrimaryCta) {
+    heroPrimaryCta.addEventListener('click', () => {
+      const nameInput = document.getElementById('full-name');
+      if (nameInput) {
+        nameInput.focus();
+        nameInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+  }
   if (heroSecondaryCta) heroSecondaryCta.addEventListener('click', scrollToManifesto);
 });
 
