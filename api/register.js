@@ -89,16 +89,24 @@ export default async function handler(req, res) {
       return res.status(409).json({ error: 'This email is already registered with CAP.' });
     }
 
-    // --- Insert registration into Postgres ---
-    await sql`
+    // --- Insert registration into Postgres and get serial ID ---
+    const insertRes = await sql`
       INSERT INTO registrations (member_id, name, age, gender, email, phone, city, interests, skill, ip_hash)
       VALUES (${memberId}, ${name}, ${age}, ${gender}, ${email}, ${phone}, ${city}, ${interests}, ${skill}, ${ipHash})
+      RETURNING id
     `;
+    const insertedSerial = parseInt(insertRes.rows[0].id, 10);
 
     // --- Atomically increment counter in KV ---
-    let current = await kv.get(KV_KEY);
-    if (current === null || current === undefined) await kv.set(KV_KEY, BASELINE);
-    const newCount = await kv.incr(KV_KEY);
+    let newCount = insertedSerial;
+    try {
+      let current = await kv.get(KV_KEY);
+      if (current === null || current === undefined) await kv.set(KV_KEY, BASELINE);
+      newCount = await kv.incr(KV_KEY);
+    } catch (kvErr) {
+      console.warn('[CAP KV Register Error] KV increment failed, falling back to database serial ID:', kvErr.message);
+      newCount = insertedSerial;
+    }
 
     // --- Also relay to Formspree for email notifications (fire-and-forget) ---
     const formspreeUrl = 'https://formspree.io/f/mzdwveln';
