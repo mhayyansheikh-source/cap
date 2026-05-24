@@ -1034,11 +1034,7 @@ function displayRegistrationSuccess(data) {
     previewBadge.classList.add('official');
   }
 
-  // Reveal download and share actions
-  const cardActions = document.getElementById('preview-card-actions');
-  if (cardActions) cardActions.style.display = 'flex';
-
-  // Hide form content, navigation and price badge
+  // Hide form content, navigation and active pricing tier badge
   form.style.display = 'none';
   const formNavSteps = document.getElementById('registration-form-nav');
   if (formNavSteps) formNavSteps.style.display = 'none';
@@ -1083,8 +1079,8 @@ function displayRegistrationSuccess(data) {
   }
 
   // Update tier element on card
+  const activeTier = getFoundingTier(serialNum);
   if (tierEl) {
-    const activeTier = getFoundingTier(serialNum);
     tierEl.textContent = activeTier.desc;
     if (activeTier.isFounding) {
       tierEl.style.color = '#ffd700'; // Gold color matching styling
@@ -1102,9 +1098,62 @@ function displayRegistrationSuccess(data) {
   // Init 3D card tilt
   init3DCardTilt();
 
-  // Capture card as PNG → upload to Vercel Blob → local notifications (no email)
-  // Wait 600ms for card animations to settle before capture
-  setTimeout(() => captureAndUploadCard(data), 600);
+  // ─── Gated Payment & Benefits Flow ──────────────────────────────────────────
+  const isFree = activeTier.price.toLowerCase() === 'free';
+  const cardActions = document.getElementById('preview-card-actions');
+  const freeBenefitsContainer = document.getElementById('free-benefits-container');
+  const paymentInfoContainer = document.getElementById('payment-info-container');
+
+  if (isFree) {
+    // Free Tier (Tier 1): Reveal download/share actions instantly & auto-download
+    if (cardActions) cardActions.style.display = 'flex';
+    if (freeBenefitsContainer) freeBenefitsContainer.style.display = 'flex';
+    if (paymentInfoContainer) paymentInfoContainer.style.display = 'none';
+
+    // Auto-capture & Auto-download card
+    setTimeout(() => captureAndUploadCard(data, true), 600);
+  } else {
+    // Paid Tiers (Tiers 2-5 & Standard): Hide actions, show bank instructions
+    if (cardActions) cardActions.style.display = 'none';
+    if (freeBenefitsContainer) freeBenefitsContainer.style.display = 'none';
+    
+    if (paymentInfoContainer) {
+      paymentInfoContainer.style.display = 'block';
+      const tierNameEl = document.getElementById('payment-tier-name');
+      const tierPriceEl = document.getElementById('payment-tier-price');
+      if (tierNameEl) tierNameEl.textContent = activeTier.name;
+      if (tierPriceEl) tierPriceEl.textContent = activeTier.price;
+
+      // Handle WhatsApp share receipt button
+      const btnShareReceipt = document.getElementById('btn-share-receipt-wa');
+      if (btnShareReceipt) {
+        // Clone button to strip existing listeners if function is somehow called twice
+        const newBtn = btnShareReceipt.cloneNode(true);
+        btnShareReceipt.parentNode.replaceChild(newBtn, btnShareReceipt);
+
+        newBtn.addEventListener('click', () => {
+          // Construct prefilled WhatsApp message
+          const msgText = `Hi, I just registered for the Cockroach Awami Party! 🪳 My Member ID is ${data.idCode} (${data.name}). Here is my payment receipt for the ${activeTier.name} (${activeTier.price}) Founding Member registration.`;
+          const waUrl = `https://api.whatsapp.com/send?phone=923379912300&text=${encodeURIComponent(msgText)}`;
+          window.open(waUrl, '_blank');
+
+          // Unlock download & share actions
+          if (cardActions) cardActions.style.display = 'flex';
+
+          // Show success benefits confirmation in place of payment details
+          paymentInfoContainer.innerHTML = `
+            <div style="background: rgba(0, 255, 102, 0.08); border: 1px solid var(--border-neon); padding: 1.25rem; border-radius: var(--border-radius-md); font-size: 0.9rem; color: var(--neon-green); text-align: center; box-shadow: 0 0 15px rgba(0, 255, 102, 0.2);">
+              <span style="font-size: 2rem; display: block; margin-bottom: 0.5rem;">🎉</span>
+              <strong>✓ Receipt Shared!</strong> Your official membership card actions and <strong>Free Guidance to Online Business Launch</strong> benefits are now fully unlocked.
+            </div>
+          `;
+        });
+      }
+    }
+
+    // Capture card & save to cloud, but prevent auto-downloading until receipt is shared
+    setTimeout(() => captureAndUploadCard(data, false), 600);
+  }
 }
 
 // ─── Local Notification System ────────────────────────────────────────────────
@@ -1142,7 +1191,7 @@ function autoDownloadPNG(canvas, memberId) {
 }
 
 // ─── Card Capture, Blob Upload & Local Notifications ─────────────────────────
-async function captureAndUploadCard(data) {
+async function captureAndUploadCard(data, shouldAutoDownload = true) {
   const cardEl   = document.getElementById('member-card');
   const statusEl = document.getElementById('card-email-status');
   if (!cardEl || !statusEl) return;
@@ -1168,7 +1217,9 @@ async function captureAndUploadCard(data) {
     });
 
     // ── Step 2: Auto-download PNG directly to device ──────────────────────────
-    autoDownloadPNG(canvas, data.idCode);
+    if (shouldAutoDownload) {
+      autoDownloadPNG(canvas, data.idCode);
+    }
 
     const imageBase64 = canvas.toDataURL('image/png');
 
@@ -1210,10 +1261,13 @@ async function captureAndUploadCard(data) {
         <div class="card-status-box success">
           <div class="card-status-icon">✅</div>
           <div class="card-status-body">
-            <p class="card-status-title green">Card downloaded &amp; saved to cloud!</p>
+            <p class="card-status-title green">
+              ${shouldAutoDownload ? 'Card downloaded &amp; saved to cloud!' : 'Card generated &amp; saved to cloud!'}
+            </p>
             <p class="card-status-desc">
-              Your ID card PNG was <strong>auto-downloaded</strong> to your device.<br>
-              A cloud backup is also available below for 24 hours.
+              ${shouldAutoDownload 
+                ? 'Your ID card PNG was <strong>auto-downloaded</strong> to your device.<br>A cloud backup is also available below for 24 hours.'
+                : 'Your ID card cloud backup is ready and available below for 24 hours.'}
             </p>
             <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.6rem;">
               <a href="${result.cardUrl}" target="_blank" rel="noopener noreferrer"
@@ -1222,17 +1276,17 @@ async function captureAndUploadCard(data) {
               </a>
               <button class="card-download-link" id="btn-redownload"
                       style="border:none;cursor:pointer;">
-                ⬇️ Download Again
+                ⬇️ Download Card
               </button>
             </div>
             <span class="card-expiry-timer" id="expiry-timer">${renderTimer()}</span>
             <p style="font-size:0.78rem;color:var(--text-gray);margin-top:0.6rem;margin-bottom:0;">
-              🗑️ Cloud copy auto-deletes after 48 hours. Your device download is permanent.
+              🗑️ Cloud copy auto-deletes after 48 hours.
             </p>
           </div>
         </div>`;
 
-      // Wire "Download Again" button
+      // Wire "Download" button
       document.getElementById('btn-redownload')
         ?.addEventListener('click', () => autoDownloadPNG(canvas, data.idCode));
 
@@ -1315,45 +1369,38 @@ function init3DCardTilt() {
 
 
 // --- 7. Card Actions (Download / Share) ---
-function downloadMemberCard() {
-  // In pure client-side static environments without heavy canvas libraries,
-  // we mock download by generating a text file with membership details
-  // and trigger the printing window which can be saved as PDF.
-  const name = document.getElementById('card-display-name').textContent;
-  const city = document.getElementById('card-display-city').textContent;
-  const skill = document.getElementById('card-display-skill').textContent;
-  const idCode = document.getElementById('card-display-id').textContent;
-  const serial = document.getElementById('card-display-serial').textContent;
+async function downloadMemberCard() {
+  const userRegistration = localStorage.getItem('cap_user_registration');
+  const idCode = userRegistration ? JSON.parse(userRegistration).idCode : 'XXXXXX';
+  
+  const cardEl = document.getElementById('member-card');
+  if (!cardEl) return;
 
-  const cardDetails = `
-=============================================
-      COCKROACH AWAMI PARTY (CAP)
-        YOUTH RESISTANCE MEMBER
-=============================================
-  NAME:         ${name}
-  CITY:         ${city}
-  SKILL:        ${skill}
-  MEMBER ID:    ${idCode}
-  SERIAL NUM:   ${serial}
-  STATUS:       RESILIENT
-=============================================
-  Adapt, Survive, Rebuild.
-  CAP.
-=============================================
-  `;
-  
-  const blob = new Blob([cardDetails], { type: 'text/plain' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `CAP-Member-${name.replace(/\s+/g, '-')}.txt`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-  
-  // Direct printing option
-  window.print();
+  const btnDownload = document.getElementById('btn-download-card');
+  if (btnDownload) {
+    btnDownload.disabled = true;
+    btnDownload.textContent = 'Generating...';
+  }
+
+  try {
+    const canvas = await html2canvas(cardEl, {
+      backgroundColor: '#081d11',
+      scale: 2,
+      useCORS: true,
+      logging: false,
+      removeContainer: true
+    });
+    autoDownloadPNG(canvas, idCode);
+  } catch (err) {
+    console.error('Error generating PNG card:', err);
+    alert('Failed to generate PNG. Triggering browser print view as fallback.');
+    window.print();
+  } finally {
+    if (btnDownload) {
+      btnDownload.disabled = false;
+      btnDownload.textContent = '📥 Download ID Card';
+    }
+  }
 }
 
 function shareOnWhatsApp() {

@@ -529,6 +529,35 @@
                 <h3 class="success-title">Welcome to the Resistance!</h3>
                 <p class="success-desc">You are officially registered. Download and share your digital membership card above.</p>
                 <div class="card-email-status" id="card-email-status" role="status" aria-live="polite"></div>
+
+                <!-- Benefits Notice for Free Tier (Tier 1) -->
+                <div id="free-benefits-container" style="display: none; margin-top: 1rem; background: rgba(0, 255, 102, 0.05); border: 1px solid rgba(0, 255, 102, 0.2); padding: 0.75rem 1rem; border-radius: var(--border-radius-sm); font-size: 0.85rem; color: var(--neon-green); display: flex; align-items: center; gap: 0.5rem; justify-content: center;">
+                  <span>🎁</span> <strong>Benefits Unlocked:</strong> Free Guidance to Online Business Launch!
+                </div>
+
+                <!-- Payment Info Block (for paid tiers) -->
+                <div id="payment-info-container" style="display: none; margin-top: 1.5rem; text-align: left; padding: 1.25rem; border-radius: var(--border-radius-md); border: 1px dashed var(--border-neon); background: rgba(0, 255, 102, 0.02);">
+                  <div class="pledge-title" style="color: var(--neon-green); margin-bottom: 0.75rem; font-weight: 700; font-size: 1.1rem; text-shadow: 0 0 10px rgba(0,255,102,0.3);">💰 Payment Required (Founding Member Fee)</div>
+                  <p class="pledge-text" style="margin-bottom: 1rem; font-size: 0.88rem; line-height: 1.5; color: var(--text-gray);">
+                    Your registration falls under <strong id="payment-tier-name" style="color: var(--pure-white);">Tier 2</strong>, which requires a founding member fee of <strong id="payment-tier-price" style="color: var(--neon-green);">250 PKR</strong>. Please transfer the fee to the bank account below and share the payment receipt on WhatsApp to unlock your membership card and premium benefits.
+                  </p>
+                  
+                  <!-- Benefits Notice for Paid Tiers -->
+                  <div style="background: rgba(0, 255, 102, 0.05); border: 1px solid rgba(0, 255, 102, 0.2); padding: 0.75rem 1rem; border-radius: var(--border-radius-sm); margin-bottom: 1rem; font-size: 0.85rem; color: var(--neon-green); display: flex; align-items: center; gap: 0.5rem;">
+                    <span>🔒</span> <strong>Unlocks after payment:</strong> Free Guidance to Online Business Launch!
+                  </div>
+
+                  <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); padding: 1rem; border-radius: var(--border-radius-sm); font-family: monospace; font-size: 0.85rem; line-height: 1.6; margin-bottom: 1.25rem; color: var(--pure-white);">
+                    <div><strong>Bank Name:</strong> HBL</div>
+                    <div><strong>Account Title:</strong> M NUMAN LATIF</div>
+                    <div><strong>Account Number:</strong> 23597000424803</div>
+                    <div><strong>IBAN:</strong> PK04HABB0023597000424803</div>
+                    <div><strong>Branch:</strong> CHEN ONE TOWER BRANCH</div>
+                  </div>
+                  <button type="button" class="btn-primary" id="btn-share-receipt-wa" style="width: 100%; justify-content: center; background: #25d366; border-color: #25d366; color: #fff; box-shadow: 0 0 10px rgba(37, 211, 102, 0.3); font-weight: 700; display: inline-flex; align-items: center; gap: 0.5rem;">
+                    🟢 Share Payment Receipt to WhatsApp
+                  </button>
+                </div>
               </div>
 
             </div><!-- end registration-form-column -->
