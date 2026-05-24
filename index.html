@@ -131,8 +131,14 @@
   </div>
 
   <!-- Header Nav (Bootstrap 5.3) -->
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top py-3" id="main-header">
-    <div class="container nav-container">
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top p-0 flex-column align-items-stretch" id="main-header">
+    <!-- Top FOMO Announcement Bar -->
+    <div class="top-fomo-bar w-100" id="top-fomo-bar" onclick="scrollToForm()">
+      <div class="fomo-bar-content">
+        <span>🔴 <strong>Live Guidance Every Week:</strong> Free mentorship to build your online business. <strong>Register today to get our free 99-Page Guidance PDF!</strong> 🎁</span>
+      </div>
+    </div>
+    <div class="container nav-container py-3">
       <a href="#" class="logo navbar-brand d-flex align-items-center gap-2 fw-bold text-white fs-4" aria-label="Cockroach Awami Party Homepage">
         <span class="logo-icon">🪳</span>CAP<span>.</span>
       </a>
