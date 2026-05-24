@@ -1385,3 +1385,72 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnDownload) btnDownload.addEventListener('click', downloadMemberCard);
   if (btnShare) btnShare.addEventListener('click', shareOnWhatsApp);
 });
+
+// Interactive Navigation Search Handler
+function handleNavSearch(event) {
+  event.preventDefault();
+  const searchInput = document.getElementById('nav-search-input');
+  if (!searchInput) return;
+
+  const query = searchInput.value.trim().toLowerCase();
+  if (!query) return;
+
+  let targetId = '';
+  
+  if (query.includes('home') || query.includes('top') || query.includes('hero')) {
+    targetId = 'hero-section';
+  } else if (query.includes('manifesto') || query.includes('pledge') || query.includes('briefing') || query.includes('video') || query.includes('idea') || query.includes('philosophy')) {
+    targetId = 'manifesto-section';
+  } else if (query.includes('roadmap') || query.includes('milestone') || query.includes('network') || query.includes('scale')) {
+    targetId = 'milestones-section';
+  } else if (query.includes('live') || query.includes('meeting') || query.includes('meet') || query.includes('mentorship') || query.includes('guidance') || query.includes('monday') || query.includes('class') || query.includes('google')) {
+    targetId = 'live-meeting-portal';
+  } else if (query.includes('faq') || query.includes('question') || query.includes('help') || query.includes('support') || query.includes('ans') || query.includes('ask')) {
+    targetId = 'faq-section';
+  } else if (query.includes('register') || query.includes('join') || query.includes('signup') || query.includes('form') || query.includes('card') || query.includes('free') || query.includes('pay') || query.includes('fee')) {
+    targetId = 'registration-form-section';
+  } else if (query.includes('facebook') || query.includes('fb') || query.includes('group') || query.includes('social') || query.includes('community')) {
+    targetId = 'facebook-section';
+  }
+
+  if (targetId) {
+    const targetEl = document.getElementById(targetId);
+    if (targetEl) {
+      targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      
+      // Flash glowing effect to indicate matched target
+      targetEl.classList.add('search-match-flash');
+      setTimeout(() => {
+        targetEl.classList.remove('search-match-flash');
+      }, 2500);
+      
+      // If it's the registration form, focus the input
+      if (targetId === 'registration-form-section') {
+        const nameInput = document.getElementById('full-name');
+        if (nameInput) setTimeout(() => nameInput.focus(), 800);
+      }
+      
+      // Close mobile collapse if open
+      const navbarCollapse = document.getElementById('navbarNav');
+      if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+        const toggleBtn = document.querySelector('.navbar-toggler');
+        if (toggleBtn) toggleBtn.click();
+      }
+      
+      // Clear input and blur
+      searchInput.value = '';
+      searchInput.blur();
+    }
+  } else {
+    // Show a custom visual fallback/tooltip warning next to search input
+    const originalPlaceholder = searchInput.placeholder;
+    searchInput.value = '';
+    searchInput.placeholder = "Try 'FAQ', 'Live', 'Roadmap'...";
+    searchInput.classList.add('search-error-flash');
+    
+    setTimeout(() => {
+      searchInput.placeholder = originalPlaceholder;
+      searchInput.classList.remove('search-error-flash');
+    }, 3000);
+  }
+}
