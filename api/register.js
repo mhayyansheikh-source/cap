@@ -5,8 +5,8 @@
 import { sql } from '@vercel/postgres';
 import { kv } from '@vercel/kv';
 
-const KV_KEY = 'cap_reg_count';
-const BASELINE = 100096;
+const KV_KEY = 'cap_reg_count_v2';
+const BASELINE = 0;
 
 // Ensure the registrations table exists (runs only on cold start if table is missing)
 async function ensureTable() {

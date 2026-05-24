@@ -35,7 +35,7 @@ const progressBar = document.getElementById('progress-bar');
 const currentPctLabel = document.getElementById('current-pct');
 const celebrationBanner = document.getElementById('celebration-banner');
 const targetGoal = 10000000; // 1 Crore (10 Million)
-const BASELINE_COUNT = 100096; // Shown instantly while API loads
+const BASELINE_COUNT = 0; // Shown instantly while API loads
 
 // currentCount: starts from baseline immediately (offline-safe), then syncs with DB
 let currentCount = BASELINE_COUNT;
@@ -92,7 +92,13 @@ function updateMilestoneRoadmap() {
       showCelebrationAndStartCountdown();
     }
   } else {
+    milestone100k.classList.remove('unlocked');
     milestone100k.classList.add('active-milestone');
+    milestone1m.classList.remove('active-milestone', 'unlocked');
+    milestone5m.classList.remove('active-milestone', 'unlocked');
+    if (celebrationBanner) {
+      celebrationBanner.style.display = 'none';
+    }
   }
 
   if (currentCount >= 1000000) {

@@ -5,8 +5,8 @@
 
 import { kv } from '@vercel/kv';
 
-const KEY = 'cap_reg_count';
-const BASELINE = 100096; // Starting count if key doesn't exist yet
+const KEY = 'cap_reg_count_v2';
+const BASELINE = 0; // Starting count if key doesn't exist yet
 
 export default async function handler(req, res) {
   // Never cache the counter — always serve the live value
