@@ -14,10 +14,18 @@ export default async function handler(req, res) {
     return res.status(401).json({ error: 'Unauthorized. Please supply the correct secret query parameter.' });
   }
 
+  let postgresStatus = 'Not started';
+  let kvStatus = 'Not started';
+
   try {
     // 1. Drop registrations table
     await sql`DROP TABLE IF EXISTS registrations CASCADE;`;
+    postgresStatus = 'Success (Table registrations dropped)';
+  } catch (pgErr) {
+    postgresStatus = `Error: ${pgErr.message}`;
+  }
 
+  try {
     // 2. Reset KV counter
     await kv.set('cap_reg_count_v2', 0);
 
@@ -26,13 +34,14 @@ export default async function handler(req, res) {
     if (keys && keys.length > 0) {
       await kv.del(...keys);
     }
-
-    return res.status(200).json({
-      ok: true,
-      message: 'Database reset successful! The table was dropped, KV counter reset to 0, and blob keys cleared.'
-    });
-  } catch (err) {
-    console.error('Database Reset Error:', err);
-    return res.status(500).json({ error: err.message });
+    kvStatus = 'Success (KV counter reset to 0, blob keys cleared)';
+  } catch (kvErr) {
+    kvStatus = `Error: ${kvErr.message}`;
   }
+
+  return res.status(200).json({
+    ok: true,
+    postgres: postgresStatus,
+    kv: kvStatus
+  });
 }
