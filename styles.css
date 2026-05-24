@@ -3356,5 +3356,145 @@ body.splash-active {
   }
 }
 
+/* =========================================================
+   BOOTSTRAP 5.3 COMPONENT OVERRIDES & INTEGRATION
+   ========================================================= */
+
+/* Global Input & Select styling */
+.form-control, .form-select {
+  background-color: rgba(12, 28, 18, 0.4) !important;
+  color: var(--text-white) !important;
+  border: 1px solid var(--border-glass) !important;
+  border-radius: var(--border-radius-sm) !important;
+  padding: 0.75rem 1rem !important;
+  font-size: 1rem !important;
+  transition: var(--transition-smooth) !important;
+}
+
+/* Option elements background inside select dropdowns */
+.form-select option {
+  background-color: var(--bg-dark) !important;
+  color: var(--text-white) !important;
+}
+
+/* Focus styles for inputs and selects */
+.form-control:focus, .form-select:focus {
+  background-color: rgba(12, 28, 18, 0.6) !important;
+  color: var(--text-white) !important;
+  border-color: var(--neon-green) !important;
+  box-shadow: 0 0 12px rgba(0, 255, 102, 0.3) !important;
+  outline: none !important;
+}
+
+/* Custom styling for inputs during validation states */
+.form-control:user-invalid, .form-select:user-invalid {
+  border-color: var(--error-red) !important;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.25) !important;
+}
+
+.form-control:user-valid, .form-select:user-valid {
+  border-color: var(--success-green) !important;
+}
+
+/* Placeholders */
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Native Bootstrap Accordion Overrides to match Cyberpunk glassmorphism */
+.accordion-item.glass {
+  background-color: rgba(12, 28, 18, 0.4) !important;
+  border: 1px solid var(--border-glass) !important;
+  border-radius: var(--border-radius-md) !important;
+  overflow: hidden;
+  transition: var(--transition-smooth) !important;
+}
+
+.accordion-item.glass:hover {
+  border-color: rgba(0, 255, 102, 0.4) !important;
+}
+
+.accordion-button {
+  background-color: rgba(12, 28, 18, 0.6) !important;
+  color: var(--pure-white) !important;
+  border: none !important;
+  font-family: 'Sora', sans-serif !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+  padding: 1.25rem 1.5rem !important;
+  transition: var(--transition-smooth) !important;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: rgba(0, 255, 102, 0.05) !important;
+  color: var(--neon-green) !important;
+  box-shadow: none !important;
+}
+
+.accordion-button:focus {
+  border-color: var(--border-neon) !important;
+  box-shadow: 0 0 10px rgba(0, 255, 102, 0.3) !important;
+}
+
+/* Style Bootstrap's SVG accordion arrow icon to be neon green */
+.accordion-button::after {
+  filter: invert(53%) sepia(93%) saturate(1915%) hue-rotate(107deg) brightness(101%) contrast(101%) !important;
+}
+
+.accordion-body {
+  background-color: rgba(5, 13, 8, 0.9) !important;
+  color: var(--text-gray) !important;
+  font-size: 0.95rem !important;
+  line-height: 1.6 !important;
+  padding: 1.25rem 1.5rem !important;
+  border-top: 1px solid rgba(0, 255, 102, 0.1) !important;
+}
+
+/* Navbar / Navigation Header overrides */
+#main-header {
+  transition: var(--transition-smooth);
+}
+
+#main-header.scrolled {
+  background: rgba(5, 13, 8, 0.92) !important;
+  backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid var(--border-glass) !important;
+}
+
+#main-header .nav-link-item {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-weight: 600 !important;
+  transition: var(--transition-smooth) !important;
+}
+
+#main-header .nav-link-item:hover,
+#main-header .nav-link-item.active {
+  color: var(--neon-green) !important;
+}
+
+/* Style the mobile navbar-toggler focus outline and color */
+.navbar-toggler:focus {
+  box-shadow: 0 0 12px rgba(0, 255, 102, 0.4) !important;
+  outline: none !important;
+}
+
+/* Responsive mobile dropdown for bootstrap collapse menu */
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    background: rgba(5, 13, 8, 0.98) !important;
+    backdrop-filter: blur(16px) !important;
+    border: 1px solid var(--border-glass) !important;
+    border-radius: var(--border-radius-md) !important;
+    padding: 1.5rem !important;
+    margin-top: 1rem !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+  }
+  .navbar-nav {
+    gap: 1rem !important;
+  }
+}
+
 
 

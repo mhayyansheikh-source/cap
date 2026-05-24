@@ -130,54 +130,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (heroSecondaryCta) heroSecondaryCta.addEventListener('click', scrollToManifesto);
 
-  // Mobile Hamburger Menu Toggle Logic
-  const hamburgerBtn = document.getElementById('hamburger-menu-btn');
-  const mobileDrawer = document.getElementById('mobile-nav-drawer');
-  const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
-  const mobileNavCta = document.getElementById('mobile-nav-cta-btn');
-
-  function toggleMobileMenu() {
-    if (!hamburgerBtn || !mobileDrawer) return;
-    const isOpen = mobileDrawer.classList.toggle('open');
-    hamburgerBtn.classList.toggle('is-open', isOpen);
-    hamburgerBtn.setAttribute('aria-expanded', String(isOpen));
-    
-    // Disable body scroll when menu is open
-    if (isOpen) {
-      document.body.classList.add('splash-active');
-    } else {
-      // Only remove if the splash overlay itself is also gone
-      const splashOverlay = document.getElementById('video-splash-overlay');
-      if (!splashOverlay || splashOverlay.classList.contains('hidden')) {
-        document.body.classList.remove('splash-active');
-      }
-    }
-  }
-
-  function closeMobileMenu() {
-    if (!hamburgerBtn || !mobileDrawer) return;
-    mobileDrawer.classList.remove('open');
-    hamburgerBtn.classList.remove('is-open');
-    hamburgerBtn.setAttribute('aria-expanded', 'false');
-    
-    // Restore body scroll (if splash screen is not active)
-    const splashOverlay = document.getElementById('video-splash-overlay');
-    if (!splashOverlay || splashOverlay.classList.contains('hidden')) {
-      document.body.classList.remove('splash-active');
-    }
-  }
-
-  if (hamburgerBtn) hamburgerBtn.addEventListener('click', toggleMobileMenu);
-
-  // Close menu when any drawer link is clicked
-  mobileNavLinks.forEach(link => {
-    link.addEventListener('click', closeMobileMenu);
-  });
-
-  if (mobileNavCta) {
-    mobileNavCta.addEventListener('click', () => {
-      closeMobileMenu();
-      scrollToForm();
+  // Close Bootstrap navbar when navigation links are clicked on mobile/tablet
+  const navLinks = document.querySelectorAll('.navbar-nav .nav-link-item');
+  const navCollapse = document.getElementById('navbarNav');
+  if (navCollapse) {
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        const navbarToggler = document.querySelector('.navbar-toggler');
+        // Only trigger hide if hamburger toggler is visible (mobile viewport)
+        if (navbarToggler && window.getComputedStyle(navbarToggler).display !== 'none') {
+          const bsCollapse = bootstrap.Collapse.getInstance(navCollapse) || new bootstrap.Collapse(navCollapse, { toggle: false });
+          bsCollapse.hide();
+        }
+      });
     });
   }
 });
@@ -1411,24 +1376,7 @@ function shareOnWhatsApp() {
 }
 
 
-// --- 8. FAQ Accordion Logic ---
-function toggleFaq(btn) {
-  const item = btn.parentElement;
-  const isActive = item.classList.contains('active');
-  
-  // Collapse other FAQ items
-  document.querySelectorAll('.faq-item').forEach(faq => {
-    faq.classList.remove('active');
-    faq.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
-  });
-
-  if (!isActive) {
-    item.classList.add('active');
-    btn.setAttribute('aria-expanded', 'true');
-  }
-}
-
-// Global Event Registration for card actions and FAQ accordion
+// Global Event Registration for card actions
 document.addEventListener('DOMContentLoaded', () => {
   // Card actions
   const btnDownload = document.getElementById('btn-download-card');
@@ -1436,9 +1384,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (btnDownload) btnDownload.addEventListener('click', downloadMemberCard);
   if (btnShare) btnShare.addEventListener('click', shareOnWhatsApp);
-
-  // FAQ accordion questions
-  document.querySelectorAll('.faq-question').forEach(btn => {
-    btn.addEventListener('click', () => toggleFaq(btn));
-  });
 });

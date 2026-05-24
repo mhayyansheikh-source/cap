@@ -27,6 +27,9 @@
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/mascot.png">
+
+  <!-- Bootstrap 5.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   
   <!-- CSS Stylesheet -->
   <link rel="stylesheet" href="styles.css">
@@ -127,67 +130,47 @@
     </div>
   </div>
 
-  <!-- Header Nav -->
-  <header id="main-header">
-    <div class="nav-container">
-      <a href="#" class="logo" aria-label="Cockroach Awami Party Homepage">
+  <!-- Header Nav (Bootstrap 5.3) -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top py-3" id="main-header">
+    <div class="container nav-container">
+      <a href="#" class="logo navbar-brand d-flex align-items-center gap-2 fw-bold text-white fs-4" aria-label="Cockroach Awami Party Homepage">
         <span class="logo-icon">🪳</span>CAP<span>.</span>
       </a>
       
-      <!-- Desktop Navigation Menu -->
-      <nav class="nav-menu" aria-label="Main Navigation">
-        <ul class="nav-links">
-          <li><a href="#hero-section" class="nav-link-item">Home</a></li>
-          <li><a href="#manifesto-section" class="nav-link-item">Manifesto</a></li>
-          <li><a href="#milestones-section" class="nav-link-item">Roadmap</a></li>
-          <li><a href="#faq-section" class="nav-link-item">FAQ</a></li>
-          <li><a href="https://www.facebook.com/cockroachawamipartyofficial" target="_blank" rel="noopener noreferrer" class="nav-link-item fb-nav-link" style="color: #1877f2; font-weight: 700; display: inline-flex; align-items: center; gap: 0.25rem;">
-            <span>👥</span> Facebook
-          </a></li>
-        </ul>
-      </nav>
-
-      <!-- Desktop CTAs -->
-      <div class="nav-actions">
-        <a href="https://www.facebook.com/cockroachawamipartyofficial" target="_blank" rel="noopener noreferrer" class="btn-fb-nav" aria-label="Join our Facebook Community">
-          <span>👍</span> Join Facebook
-        </a>
-        <button class="nav-cta" id="nav-cta-btn">Join Now 🚀</button>
-      </div>
-
       <!-- Hamburger Menu Button for Mobile -->
-      <button class="hamburger" id="hamburger-menu-btn" aria-expanded="false" aria-label="Toggle Mobile Menu">
-        <span></span>
-        <span></span>
-        <span></span>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
       </button>
-    </div>
-  </header>
 
-  <!-- Mobile Nav Drawer -->
-  <div class="mobile-nav-drawer" id="mobile-nav-drawer">
-    <ul class="mobile-nav-links">
-      <li><a href="#hero-section" class="mobile-nav-link">Home</a></li>
-      <li><a href="#manifesto-section" class="mobile-nav-link">Manifesto</a></li>
-      <li><a href="#milestones-section" class="mobile-nav-link">Roadmap</a></li>
-      <li><a href="#faq-section" class="mobile-nav-link">FAQ</a></li>
-      <li><a href="https://www.facebook.com/cockroachawamipartyofficial" target="_blank" rel="noopener noreferrer" class="mobile-nav-link" style="color: #1877f2; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; justify-content: center;">
-        <span>👥</span> Facebook Community
-      </a></li>
-      <li style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem; width: 100%; max-width: 280px; padding: 0 1.5rem; list-style: none;">
-        <a href="https://www.facebook.com/cockroachawamipartyofficial" target="_blank" rel="noopener noreferrer" class="btn-fb-nav" style="display: block; text-align: center; width: 100%;">
-          <span>👍</span> Join Facebook
-        </a>
-        <button class="nav-cta" id="mobile-nav-cta-btn" style="width: 100%;">Join Now 🚀</button>
-      </li>
-    </ul>
-  </div>
+      <!-- Navigation links and Actions -->
+      <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0 nav-links">
+          <li class="nav-item"><a href="#hero-section" class="nav-link text-light-50 nav-link-item">Home</a></li>
+          <li class="nav-item"><a href="#manifesto-section" class="nav-link text-light-50 nav-link-item">Manifesto</a></li>
+          <li class="nav-item"><a href="#milestones-section" class="nav-link text-light-50 nav-link-item">Roadmap</a></li>
+          <li class="nav-item"><a href="#faq-section" class="nav-link text-light-50 nav-link-item">FAQ</a></li>
+          <li class="nav-item">
+            <a href="https://www.facebook.com/cockroachawamipartyofficial" target="_blank" rel="noopener noreferrer" class="nav-link nav-link-item fb-nav-link" style="color: #1877f2; font-weight: 700; display: inline-flex; align-items: center; gap: 0.25rem;">
+              <span>👥</span> Facebook
+            </a>
+          </li>
+        </ul>
+        <div class="d-flex align-items-center gap-3 nav-actions">
+          <a href="https://www.facebook.com/cockroachawamipartyofficial" target="_blank" rel="noopener noreferrer" class="btn-fb-nav btn btn-outline-primary btn-sm rounded-pill px-3 py-2 text-white border-primary" style="font-size: 0.85rem;" aria-label="Join our Facebook Community">
+            <span>👍</span> Join Facebook
+          </a>
+          <button class="nav-cta btn btn-success btn-sm rounded-pill px-3 py-2" id="nav-cta-btn" style="font-size: 0.85rem; font-weight:700;">Join Now 🚀</button>
+        </div>
+      </div>
+    </div>
+  </nav>
 
   <!-- Hero Section -->
   <main>
-    <section class="hero" id="hero-section">
-      <div class="hero-grid">
-        <div class="hero-content">
+    <section class="hero py-5" id="hero-section">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-6 hero-content">
           <div class="badge">
             <span class="pulse-dot" style="background-color: var(--neon-green);"></span>
             🇵🇰 Pakistan's Youth Revolution (Ages 18-40)
@@ -245,7 +228,8 @@
         </div>
 
         <!-- Interactive Step-By-Step Registration Form Card -->
-        <div class="form-wrapper glass" id="registration-form-section">
+        <div class="col-lg-6">
+          <div class="form-wrapper glass" id="registration-form-section">
           <div class="registration-layout-container" id="registration-layout-container">
             
             <!-- Full Width Preview -->
@@ -338,9 +322,9 @@
                     <h3 class="step-heading">What's your name?</h3>
                     <p class="step-sub">This appears on your official CAP membership card.</p>
                   </div>
-                  <div class="form-group">
-                    <label for="full-name">Full Name (as on CNIC)</label>
-                    <input type="text" id="full-name" name="name" autocomplete="name" required placeholder="e.g. Muhammad Ali">
+                  <div class="mb-3">
+                    <label for="full-name" class="form-label">Full Name (as on CNIC)</label>
+                    <input type="text" class="form-control" id="full-name" name="name" autocomplete="name" required placeholder="e.g. Muhammad Ali">
                     <span class="error-message" id="error-name" role="alert">Please enter your full name.</span>
                   </div>
                 </div>
@@ -352,15 +336,15 @@
                     <h3 class="step-heading">Your demographics</h3>
                     <p class="step-sub">CAP is open to youth aged 18–40 across Pakistan.</p>
                   </div>
-                  <div class="form-row">
-                    <div class="form-group">
-                      <label for="age">Age (Must be 18 to 40)</label>
-                      <input type="number" id="age" name="age" min="18" max="40" required placeholder="e.g. 24">
+                  <div class="row g-3">
+                    <div class="col-md-6 mb-3">
+                      <label for="age" class="form-label">Age (Must be 18 to 40)</label>
+                      <input type="number" class="form-control" id="age" name="age" min="18" max="40" required placeholder="e.g. 24">
                       <span class="error-message" id="error-age" role="alert">Age must be between 18 and 40 to join.</span>
                     </div>
-                    <div class="form-group">
-                      <label for="gender">Gender Identity</label>
-                      <select id="gender" name="gender" required>
+                    <div class="col-md-6 mb-3">
+                      <label for="gender" class="form-label">Gender Identity</label>
+                      <select class="form-select" id="gender" name="gender" required>
                         <option value="" disabled selected>Select Gender</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
@@ -379,14 +363,14 @@
                     <h3 class="step-heading">How can we reach you?</h3>
                     <p class="step-sub">Your contact details stay private and secure.</p>
                   </div>
-                  <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" autocomplete="email" required placeholder="e.g. name@example.com">
+                  <div class="mb-3">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" class="form-control" id="email" name="email" autocomplete="email" required placeholder="e.g. name@example.com">
                     <span class="error-message" id="error-email" role="alert">Please enter a valid email address.</span>
                   </div>
-                  <div class="form-group">
-                    <label for="phone">Phone Number (Pakistani Mobile)</label>
-                    <input type="tel" id="phone" name="phone" autocomplete="tel" required placeholder="e.g. 03001234567">
+                  <div class="mb-3">
+                    <label for="phone" class="form-label">Phone Number (Pakistani Mobile)</label>
+                    <input type="tel" class="form-control" id="phone" name="phone" autocomplete="tel" required placeholder="e.g. 03001234567">
                     <span class="input-hint">Format: 03xx-xxxxxxx or +923xx-xxxxxxx</span>
                     <span class="error-message" id="error-phone" role="alert">Please enter a valid Pakistani mobile number.</span>
                   </div>
@@ -399,9 +383,9 @@
                     <h3 class="step-heading">Your location &amp; skill</h3>
                     <p class="step-sub">These appear on your membership card — keep it updated!</p>
                   </div>
-                  <div class="form-group">
-                    <label for="city">Your City</label>
-                    <select id="city" name="city" required>
+                  <div class="mb-3">
+                    <label for="city" class="form-label">Your City</label>
+                    <select class="form-select" id="city" name="city" required>
                       <option value="" disabled selected>Select City</option>
                       <option value="Karachi">Karachi</option>
                       <option value="Lahore">Lahore</option>
@@ -420,9 +404,9 @@
                     </select>
                     <span class="error-message" id="error-city" role="alert">Please select your city.</span>
                   </div>
-                  <div class="form-group">
-                    <label for="digital-skill">Primary Digital Skill</label>
-                    <select id="digital-skill" name="digital_skill" required>
+                  <div class="mb-3">
+                    <label for="digital-skill" class="form-label">Primary Digital Skill</label>
+                    <select class="form-select" id="digital-skill" name="digital_skill" required>
                       <option value="" disabled selected>Select Your Primary Skill</option>
                       <option value="software_dev">Software Dev / Coding</option>
                       <option value="design">UI/UX &amp; Graphic Design</option>
@@ -446,8 +430,8 @@
                     <p class="step-sub">Choose what you care about and commit to the movement.</p>
                   </div>
 
-                  <div class="form-group">
-                    <label>Areas of interest <span style="font-weight:400;color:var(--text-gray)">(Choose at least one)</span></label>
+                  <div class="mb-3">
+                    <label class="form-label">Areas of interest <span style="font-weight:400;color:var(--text-gray)">(Choose at least one)</span></label>
                     <div class="interest-tag-grid">
                       <div class="tag-checkbox-container">
                         <input type="checkbox" id="tag-tech" name="interests" value="Tech &amp; Freelancing">
@@ -477,9 +461,9 @@
                     <span class="error-message" id="error-interests" role="alert">Please select at least one area of interest.</span>
                   </div>
 
-                  <div class="form-group">
-                    <label for="message">What change do you want to see? <span style="font-weight:400;color:var(--text-gray)">(Optional)</span></label>
-                    <textarea id="message" name="message" maxlength="300" placeholder="e.g. More IT export centers, free internet zones for freelancers..."></textarea>
+                  <div class="mb-3">
+                    <label for="message" class="form-label">What change do you want to see? <span style="font-weight:400;color:var(--text-gray)">(Optional)</span></label>
+                    <textarea class="form-control" id="message" name="message" maxlength="300" placeholder="e.g. More IT export centers, free internet zones for freelancers..."></textarea>
                     <span class="input-hint">Maximum 300 characters.</span>
                   </div>
 
@@ -490,9 +474,9 @@
                     </p>
                   </div>
 
-                  <div class="checkbox-group">
-                    <input type="checkbox" id="pledge-chk" name="pledge_agreed" required>
-                    <label for="pledge-chk">
+                  <div class="checkbox-group mb-3 d-flex align-items-start gap-2">
+                    <input type="checkbox" id="pledge-chk" name="pledge_agreed" required style="margin-top: 0.25rem;">
+                    <label for="pledge-chk" style="font-size: 0.88rem; line-height: 1.4;">
                       I agree to the Cockroach pledge and commit to being a positive force of mental change for the youth of Pakistan. (Free of Cost)
                     </label>
                   </div>
@@ -564,22 +548,27 @@
 
           </div><!-- end registration-layout-container -->
         </div><!-- end form-wrapper -->
-    </section>
+        </div><!-- end col-lg-6 -->
+      </div><!-- end row -->
+    </div><!-- end container -->
+  </section>
 
     <!-- Stats Banner -->
-    <section class="stats-banner">
-      <div class="stats-grid glass">
-        <div class="stat-item">
-          <div class="stat-value neon-val" id="target-stat">10,000,000</div>
-          <div class="stat-label">Target Registration Goal</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value">18 - 40</div>
-          <div class="stat-label">Target Age Bracket</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value neon-val">Rs. 0</div>
-          <div class="stat-label">Registration Cost</div>
+    <section class="stats-banner py-4">
+      <div class="container">
+        <div class="row stats-grid glass text-center g-4 p-4 rounded-4 mx-0">
+          <div class="col-md-4 stat-item">
+            <div class="stat-value neon-val" id="target-stat">10,000,000</div>
+            <div class="stat-label">Target Registration Goal</div>
+          </div>
+          <div class="col-md-4 stat-item">
+            <div class="stat-value">18 - 40</div>
+            <div class="stat-label">Target Age Bracket</div>
+          </div>
+          <div class="col-md-4 stat-item">
+            <div class="stat-value neon-val">Rs. 0</div>
+            <div class="stat-label">Registration Cost</div>
+          </div>
         </div>
       </div>
     </section>
@@ -678,37 +667,47 @@
         <p class="section-desc">Why a Cockroach? Because they are the ultimate survivors. We believe the youth of Pakistan must adopt the same mindset.</p>
       </div>
 
-      <div class="manifesto-grid">
-        <div class="manifesto-card glass glass-hover">
-          <div class="manifesto-icon">🛡️</div>
-          <h3 class="manifesto-card-title">Indestructible Resilience</h3>
-          <p class="manifesto-card-text">
-            Outdated systems want to crush youth hope. Cockroaches survive nuclear blasts and pressure. We do not yield to inflation, economic stagnation, or broken governance. We endure and build.
-          </p>
-        </div>
+      <div class="container">
+        <div class="row g-4 justify-content-center">
+          <div class="col-md-6 col-lg-3">
+            <div class="manifesto-card glass glass-hover p-4 h-100">
+              <div class="manifesto-icon mb-3">🛡️</div>
+              <h3 class="manifesto-card-title">Indestructible Resilience</h3>
+              <p class="manifesto-card-text">
+                Outdated systems want to crush youth hope. Cockroaches survive nuclear blasts and pressure. We do not yield to inflation, economic stagnation, or broken governance. We endure and build.
+              </p>
+            </div>
+          </div>
 
-        <div class="manifesto-card glass glass-hover">
-          <div class="manifesto-icon">🧬</div>
-          <h3 class="manifesto-card-title">Extreme Adaptability</h3>
-          <p class="manifesto-card-text">
-            Rigid dogmas break under pressure. We advocate for absolute mental fluidity—ready to learn new skills, adopt emerging technologies (AI, coding, digital exports), and change strategies to win.
-          </p>
-        </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="manifesto-card glass glass-hover p-4 h-100">
+              <div class="manifesto-icon mb-3">🧬</div>
+              <h3 class="manifesto-card-title">Extreme Adaptability</h3>
+              <p class="manifesto-card-text">
+                Rigid dogmas break under pressure. We advocate for absolute mental fluidity—ready to learn new skills, adopt emerging technologies (AI, coding, digital exports), and change strategies to win.
+              </p>
+            </div>
+          </div>
 
-        <div class="manifesto-card glass glass-hover">
-          <div class="manifesto-icon">⚡</div>
-          <h3 class="manifesto-card-title">Youth Sovereignty (18 - 40)</h3>
-          <p class="manifesto-card-text">
-            Pakistan is one of the youngest nations on earth. The old leadership cannot represent a tech-native generation. We are building the numbers to democratically command our own future.
-          </p>
-        </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="manifesto-card glass glass-hover p-4 h-100">
+              <div class="manifesto-icon mb-3">⚡</div>
+              <h3 class="manifesto-card-title">Youth Sovereignty (18 - 40)</h3>
+              <p class="manifesto-card-text">
+                Pakistan is one of the youngest nations on earth. The old leadership cannot represent a tech-native generation. We are building the numbers to democratically command our own future.
+              </p>
+            </div>
+          </div>
 
-        <div class="manifesto-card glass glass-hover">
-          <div class="manifesto-icon">💻</div>
-          <h3 class="manifesto-card-title">Digital Economic Freedom</h3>
-          <p class="manifesto-card-text">
-            Traditional jobs are drying up. We empower youth with the tools to earn in foreign currencies, build startups, trade tech assets, and bring home financial independence without relying on state jobs.
-          </p>
+          <div class="col-md-6 col-lg-3">
+            <div class="manifesto-card glass glass-hover p-4 h-100">
+              <div class="manifesto-icon mb-3">💻</div>
+              <h3 class="manifesto-card-title">Digital Economic Freedom</h3>
+              <p class="manifesto-card-text">
+                Traditional jobs are drying up. We empower youth with the tools to earn in foreign currencies, build startups, trade tech assets, and bring home financial independence without relying on state jobs.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -875,48 +874,56 @@
         <p class="section-desc">Cleared doubts for the next generation of Pakistan.</p>
       </div>
 
-      <div class="faq-grid">
-        <div class="faq-item glass">
-          <button class="faq-question" aria-expanded="false">
-            Why name it "Cockroach Awami Party"? Isn't that weird?
-          </button>
-          <div class="faq-answer">
-            <p>
+      <div class="accordion" id="faqAccordion" style="max-width: 800px; margin: 0 auto;">
+        <div class="accordion-item bg-dark border-secondary mb-3 glass">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed bg-dark text-white fw-bold border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#faq-1" aria-expanded="false" aria-controls="faq-1">
+              Why name it "Cockroach Awami Party"? Isn't that weird?
+            </button>
+          </h2>
+          <div id="faq-1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div class="accordion-body text-gray">
               It is intentionally bold. Other parties have tigers, eagles, or lions—predators that feed on the weak. We chose the cockroach because it is humble, resilient, highly adaptable, and is the only organism that survives a nuclear fallout. We represent the average Pakistani who has survived every systemic crisis and is now ready to build a new world.
-            </p>
+            </div>
           </div>
         </div>
 
-        <div class="faq-item glass">
-          <button class="faq-question" aria-expanded="false">
-            Is registration really free of cost?
-          </button>
-          <div class="faq-answer">
-            <p>
+        <div class="accordion-item bg-dark border-secondary mb-3 glass">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed bg-dark text-white fw-bold border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#faq-2" aria-expanded="false" aria-controls="faq-2">
+              Is registration really free of cost?
+            </button>
+          </h2>
+          <div id="faq-2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div class="accordion-body text-gray">
               Yes, 100% free. We are a mindset revolution and a community network. We do not charge anything to join, learn, or participate in the CAP movements.
-            </p>
+            </div>
           </div>
         </div>
 
-        <div class="faq-item glass">
-          <button class="faq-question" aria-expanded="false">
-            What is the significance of 1 Crore registrations?
-          </button>
-          <div class="faq-answer">
-            <p>
+        <div class="accordion-item bg-dark border-secondary mb-3 glass">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed bg-dark text-white fw-bold border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#faq-3" aria-expanded="false" aria-controls="faq-3">
+              What is the significance of 1 Crore registrations?
+            </button>
+          </h2>
+          <div id="faq-3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div class="accordion-body text-gray">
               With 1 Crore (10 Million) registered members between the ages of 18 and 40, we will represent the largest united youth block in the history of Pakistan. This numbers pool gives us the democratic and economic leverage to reform education policies, create localized technology hubs, and mandate youth inclusion in governance.
-            </p>
+            </div>
           </div>
         </div>
 
-        <div class="faq-item glass">
-          <button class="faq-question" aria-expanded="false">
-            What happens after 1 Lakh (100,000) registrations?
-          </button>
-          <div class="faq-answer">
-            <p>
+        <div class="accordion-item bg-dark border-secondary mb-3 glass">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed bg-dark text-white fw-bold border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#faq-4" aria-expanded="false" aria-controls="faq-4">
+              What happens after 1 Lakh (100,000) registrations?
+            </button>
+          </h2>
+          <div id="faq-4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div class="accordion-body text-gray">
               Crossing 1 Lakh registrations will trigger the countdown for our first historic Live Meeting. This will be a massive virtual and in-person assembly connecting regional coordinators from all provinces to elect interim youth representatives.
-            </p>
+            </div>
           </div>
         </div>
       </div>
@@ -968,6 +975,8 @@
 
   <!-- html2canvas — for capturing the member card as a PNG image -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- Bootstrap 5.3 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <!-- JS App -->
   <script src="app.js"></script>
 </body>
