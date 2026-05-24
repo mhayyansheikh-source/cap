@@ -1,4 +1,4 @@
-// --- 1. Navigation, Video & Scroll Effects ---
+// --- 1. Video Splash Screen & Scroll Effects ---
 const header = document.getElementById('main-header');
 window.addEventListener('scroll', () => {
   if (window.scrollY > 50) {
@@ -8,84 +8,82 @@ window.addEventListener('scroll', () => {
   }
 });
 
-// Transition from video to registration form
-function proceedToRegistration() {
-  const videoSection = document.getElementById('video-manifesto-section');
-  const regFormSection = document.getElementById('registration-form-section');
-  if (!videoSection || !regFormSection) return;
+// Splash Screen Logic
+const splashOverlay = document.getElementById('video-splash-overlay');
+const btnEnter = document.getElementById('btn-enter-site');
+const splashIframe = document.getElementById('splash-video-iframe');
 
-  videoSection.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-  regFormSection.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+function checkSplashState() {
+  const cachedReg = localStorage.getItem('cap_user_registration');
+  const splashSeen = sessionStorage.getItem('cap_splash_seen') === 'true';
+  
+  let isRegistered = false;
+  if (cachedReg) {
+    const data = JSON.parse(cachedReg);
+    if (data.registered) isRegistered = true;
+  }
 
-  videoSection.style.opacity = '0';
-  videoSection.style.transform = 'translateY(-10px)';
+  // If already registered or already seen in this session, bypass the splash screen
+  if (isRegistered || splashSeen) {
+    if (splashOverlay) {
+      splashOverlay.style.display = 'none';
+      splashOverlay.classList.add('hidden');
+    }
+    document.body.classList.remove('splash-active');
+  } else {
+    document.body.classList.add('splash-active');
+  }
+}
 
-  setTimeout(() => {
-    videoSection.style.display = 'none';
-    regFormSection.style.display = 'block';
-    regFormSection.style.opacity = '0';
-    regFormSection.style.transform = 'translateY(10px)';
-
-    // Trigger reflow
-    regFormSection.offsetHeight;
-
-    regFormSection.style.opacity = '1';
-    regFormSection.style.transform = 'translateY(0)';
-  }, 400);
+function dismissSplash() {
+  if (!splashOverlay) return;
+  splashOverlay.classList.add('hidden');
+  document.body.classList.remove('splash-active');
+  sessionStorage.setItem('cap_splash_seen', 'true');
+  
+  // Stop YouTube video playback by resetting the iframe src
+  if (splashIframe) {
+    splashIframe.src = splashIframe.src;
+  }
 }
 
 function scrollToForm() {
-  const videoSection = document.getElementById('video-manifesto-section');
   const regFormSection = document.getElementById('registration-form-section');
-
-  if (videoSection && videoSection.style.display !== 'none') {
-    proceedToRegistration();
-    setTimeout(() => {
-      if (regFormSection) regFormSection.scrollIntoView({ behavior: 'smooth' });
-    }, 450);
-  } else if (regFormSection) {
+  if (regFormSection) {
     regFormSection.scrollIntoView({ behavior: 'smooth' });
   }
 }
 
 function scrollToManifesto() {
   const manifestoSection = document.getElementById('manifesto-section');
-  if (manifestoSection) manifestoSection.scrollIntoView({ behavior: 'smooth' });
+  if (manifestoSection) {
+    manifestoSection.scrollIntoView({ behavior: 'smooth' });
+  }
 }
 
-// Bind navigation click listeners
+// Bind click listeners
 document.addEventListener('DOMContentLoaded', () => {
+  // Check splash screen state first
+  checkSplashState();
+
   const navCtaBtn = document.getElementById('nav-cta-btn');
   const heroPrimaryCta = document.getElementById('hero-primary-cta');
   const heroSecondaryCta = document.getElementById('hero-secondary-cta');
-  const btnProceed = document.getElementById('btn-proceed-to-register');
 
+  if (btnEnter) btnEnter.addEventListener('click', dismissSplash);
   if (navCtaBtn) navCtaBtn.addEventListener('click', scrollToForm);
   
   if (heroPrimaryCta) {
     heroPrimaryCta.addEventListener('click', () => {
-      const videoSection = document.getElementById('video-manifesto-section');
-      if (videoSection && videoSection.style.display !== 'none') {
-        proceedToRegistration();
-        setTimeout(() => {
-          const nameInput = document.getElementById('full-name');
-          if (nameInput) {
-            nameInput.focus();
-            nameInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-        }, 450);
-      } else {
-        const nameInput = document.getElementById('full-name');
-        if (nameInput) {
-          nameInput.focus();
-          nameInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
+      const nameInput = document.getElementById('full-name');
+      if (nameInput) {
+        nameInput.focus();
+        nameInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     });
   }
 
   if (heroSecondaryCta) heroSecondaryCta.addEventListener('click', scrollToManifesto);
-  if (btnProceed) btnProceed.addEventListener('click', proceedToRegistration);
 });
 
 // --- 2. Live Registration Counter — Vercel KV Backed ---
@@ -869,9 +867,13 @@ function generateUniqueMemberID() {
 }
 
 function displayRegistrationSuccess(data) {
-  // Hide video manifesto section if visible
-  const videoSection = document.getElementById('video-manifesto-section');
-  if (videoSection) videoSection.style.display = 'none';
+  // Dismiss splash screen just in case
+  const splashOverlay = document.getElementById('video-splash-overlay');
+  if (splashOverlay) {
+    splashOverlay.style.display = 'none';
+    splashOverlay.classList.add('hidden');
+  }
+  document.body.classList.remove('splash-active');
   
   // Ensure registration section is visible
   const regFormSection = document.getElementById('registration-form-section');
