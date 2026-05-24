@@ -192,6 +192,19 @@
                   </select>
                   <span class="error-message" id="error-gender" role="alert">Please select your gender identity.</span>
                 </div>
+              <div class="form-group" style="margin-top: 1.25rem;">
+                <label>Profile Photo (Optional)</label>
+                <div class="file-upload-wrapper">
+                  <input type="file" id="profile-photo" name="profile_photo" accept="image/*" class="file-upload-input" style="display: none;">
+                  <div class="file-upload-trigger" id="file-upload-trigger" style="border: 1px dashed var(--border-glass); border-radius: var(--border-radius-md); padding: 1.25rem; text-align: center; cursor: pointer; transition: all 0.3s; background: rgba(255, 255, 255, 0.01);">
+                    <span class="upload-icon" style="font-size: 1.5rem; display: block; margin-bottom: 0.35rem;">📷</span>
+                    <span class="upload-text" id="upload-status-text" style="font-size: 0.85rem; color: var(--text-gray);">Upload your photo (JPG, PNG - Max 2MB)</span>
+                  </div>
+                </div>
+                <div class="photo-preview-container" id="photo-preview-container" style="display: none; align-items: center; gap: 1rem; margin-top: 0.75rem;">
+                  <img id="photo-preview" src="" alt="Profile Preview" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border-neon);">
+                  <button type="button" class="btn-remove-photo" id="btn-remove-photo" style="background: rgba(255, 74, 74, 0.1); color: #ff4a4a; border: 1px solid rgba(255, 74, 74, 0.2); padding: 0.35rem 0.75rem; border-radius: var(--border-radius-sm); font-size: 0.85rem; cursor: pointer; transition: all 0.2s;">Remove</button>
+                </div>
               </div>
             </div>
 
@@ -362,23 +375,30 @@
                     COCKROACH AWAMI PARTY
                     <span>YOUTH RESISTANCE 🇵🇰</span>
                   </div>
-                  <div class="card-badge">MEMBER</div>
+                  <div class="card-badge" id="card-display-badge">MEMBER</div>
                 </div>
                 <div class="card-chip"></div>
                 <div class="card-body">
-                  <div class="card-name" id="card-display-name">Muhammad Ali</div>
-                  <div class="card-meta-row">
-                    <div class="card-meta">
-                      <span class="card-meta-label">City</span>
-                      <span class="card-meta-value" id="card-display-city">Lahore</span>
+                  <div class="card-profile-photo-area">
+                    <div class="card-photo-box" id="card-display-photo-box">
+                      <img src="assets/mascot.png" id="card-display-photo" alt="Member Photo">
                     </div>
-                    <div class="card-meta">
-                      <span class="card-meta-label">Skill</span>
-                      <span class="card-meta-value" id="card-display-skill">AI Prompting</span>
-                    </div>
-                    <div class="card-meta">
-                      <span class="card-meta-label">Status</span>
-                      <span class="card-meta-value" style="color: var(--neon-green);">RESILIENT</span>
+                  </div>
+                  <div class="card-info-area">
+                    <div class="card-name" id="card-display-name">Muhammad Ali</div>
+                    <div class="card-meta-row">
+                      <div class="card-meta">
+                        <span class="card-meta-label">City</span>
+                        <span class="card-meta-value" id="card-display-city">Lahore</span>
+                      </div>
+                      <div class="card-meta">
+                        <span class="card-meta-label">Skill</span>
+                        <span class="card-meta-value" id="card-display-skill">AI Prompting</span>
+                      </div>
+                      <div class="card-meta">
+                        <span class="card-meta-label">Status</span>
+                        <span class="card-meta-value" id="card-display-status" style="color: var(--neon-green);">RESILIENT</span>
+                      </div>
                     </div>
                   </div>
                 </div>

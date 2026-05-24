@@ -1237,6 +1237,13 @@ header.scrolled {
   letter-spacing: 0.05em;
 }
 
+.badge-founder {
+  background: linear-gradient(135deg, #ffd700, #b8860b) !important;
+  color: #020704 !important;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.4) !important;
+  border: 1px solid #ffd700 !important;
+}
+
 .card-chip {
   width: clamp(24px, 10cqw, 38px);
   height: clamp(18px, 7.5cqw, 28px);
@@ -1252,23 +1259,55 @@ header.scrolled {
   position: relative;
   z-index: 2;
   margin-bottom: clamp(0.75rem, 5cqw, 1.5rem);
+  display: flex;
+  gap: clamp(0.75rem, 4cqw, 1.25rem);
+  align-items: center;
+}
+
+.card-profile-photo-area {
+  flex-shrink: 0;
+}
+
+.card-photo-box {
+  width: clamp(70px, 20cqw, 85px);
+  height: clamp(85px, 24cqw, 100px);
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--border-neon);
+  box-shadow: 0 0 10px rgba(0, 255, 102, 0.15);
+  overflow: hidden;
+  background: #020704;
+}
+
+.card-photo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #020704;
+}
+
+.card-info-area {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  overflow: hidden;
 }
 
 .card-name {
   font-family: 'Sora', sans-serif;
-  font-size: clamp(0.95rem, 5.5cqw, 1.3rem);
+  font-size: clamp(0.95rem, 5.5cqw, 1.25rem);
   font-weight: 700;
   color: var(--pure-white);
   text-shadow: 0 2px 4px rgba(0,0,0,0.5);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.1rem;
 }
 
 .card-meta-row {
   display: flex;
-  gap: 1.5rem;
+  gap: clamp(0.75rem, 3.5cqw, 1.25rem);
 }
 
 .card-meta {
@@ -2933,4 +2972,20 @@ footer {
     color: black;
   }
 }
+
+/* =========================================================
+   FILE UPLOAD STYLES
+   ========================================================= */
+.file-upload-trigger:hover {
+  border-color: var(--neon-green) !important;
+  box-shadow: 0 0 12px rgba(0, 255, 102, 0.2);
+  background: rgba(0, 255, 102, 0.03) !important;
+}
+
+.btn-remove-photo:hover {
+  background: rgba(255, 74, 74, 0.2) !important;
+  border-color: rgba(255, 74, 74, 0.4) !important;
+  box-shadow: 0 0 8px rgba(255, 74, 74, 0.2);
+}
+
 

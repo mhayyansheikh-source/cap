@@ -323,6 +323,66 @@ const submitSpinner = document.getElementById('submit-spinner');
 let currentStep = 1;
 const totalSteps = steps.length;
 
+// --- Profile Photo Upload Logic ---
+const fileInput = document.getElementById('profile-photo');
+const fileTrigger = document.getElementById('file-upload-trigger');
+const previewContainer = document.getElementById('photo-preview-container');
+const photoPreview = document.getElementById('photo-preview');
+const btnRemovePhoto = document.getElementById('btn-remove-photo');
+const uploadStatusText = document.getElementById('upload-status-text');
+
+let uploadedPhotoBase64 = null;
+
+if (fileTrigger && fileInput) {
+  fileTrigger.addEventListener('click', () => fileInput.click());
+}
+
+if (fileInput) {
+  fileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Validate size (Max 2MB)
+    if (file.size > 2 * 1024 * 1024) {
+      alert('⚠️ Image size must be less than 2MB.');
+      fileInput.value = '';
+      return;
+    }
+
+    // Validate type
+    if (!file.type.startsWith('image/')) {
+      alert('⚠️ Please upload an image file.');
+      fileInput.value = '';
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      uploadedPhotoBase64 = event.target.result;
+      if (photoPreview) photoPreview.src = uploadedPhotoBase64;
+      if (previewContainer) previewContainer.style.display = 'flex';
+      if (uploadStatusText) {
+        uploadStatusText.textContent = `Selected: ${file.name}`;
+        uploadStatusText.style.color = 'var(--neon-green)';
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+if (btnRemovePhoto) {
+  btnRemovePhoto.addEventListener('click', () => {
+    if (fileInput) fileInput.value = '';
+    uploadedPhotoBase64 = null;
+    if (previewContainer) previewContainer.style.display = 'none';
+    if (photoPreview) photoPreview.src = '';
+    if (uploadStatusText) {
+      uploadStatusText.textContent = 'Upload your photo (JPG, PNG - Max 2MB)';
+      uploadStatusText.style.color = 'var(--text-gray)';
+    }
+  });
+}
+
 function updateFormNav() {
   // Update step progress line width
   const pct = ((currentStep - 1) / (totalSteps - 1)) * 100;
@@ -636,6 +696,8 @@ form.addEventListener('submit', async (e) => {
         skill: skillName,
         idCode: result.memberId,
         serial: formatNumberWithCommas(result.serial),
+        serialNum: result.serial,
+        profilePhoto: uploadedPhotoBase64 || null,
         registered: true
       };
 
@@ -649,6 +711,17 @@ form.addEventListener('submit', async (e) => {
 
       // Clear form and display success UI with real DB card data
       form.reset();
+
+      // Reset photo upload UI elements
+      if (fileInput) fileInput.value = '';
+      uploadedPhotoBase64 = null;
+      if (previewContainer) previewContainer.style.display = 'none';
+      if (photoPreview) photoPreview.src = '';
+      if (uploadStatusText) {
+        uploadStatusText.textContent = 'Upload your photo (JPG, PNG - Max 2MB)';
+        uploadStatusText.style.color = 'var(--text-gray)';
+      }
+
       displayRegistrationSuccess(registrationData);
       startConfetti();
 
@@ -683,7 +756,8 @@ function generateUniqueMemberID() {
 function displayRegistrationSuccess(data) {
   // Hide form content
   form.style.display = 'none';
-  document.querySelector('.form-nav-steps').style.display = 'none';
+  const formNavSteps = document.querySelector('.form-nav-steps');
+  if (formNavSteps) formNavSteps.style.display = 'none';
 
   // Fill member card visual fields
   document.getElementById('card-display-name').textContent = data.name;
@@ -691,6 +765,35 @@ function displayRegistrationSuccess(data) {
   document.getElementById('card-display-skill').textContent = data.skill || 'Member';
   document.getElementById('card-display-id').textContent = data.idCode;
   document.getElementById('card-display-serial').textContent = `#${data.serial}`;
+
+  // Display uploaded profile photo if available, fallback to default mascot
+  const cardPhoto = document.getElementById('card-display-photo');
+  if (cardPhoto) {
+    if (data.profilePhoto) {
+      cardPhoto.src = data.profilePhoto;
+    } else {
+      cardPhoto.src = 'assets/mascot.png';
+    }
+  }
+
+  // Update badge and status based on Founding Member logic (first 100 registrations)
+  const badgeEl = document.getElementById('card-display-badge');
+  const statusEl = document.getElementById('card-display-status');
+  const serialNum = data.serialNum || parseInt(String(data.serial).replace(/,/g, ''), 10);
+  
+  if (badgeEl && statusEl) {
+    if (serialNum <= 100) {
+      badgeEl.textContent = 'FOUNDING MEMBER';
+      badgeEl.classList.add('badge-founder');
+      statusEl.textContent = 'FOUNDER';
+      statusEl.style.color = '#ffd700'; // Gold color matching styling
+    } else {
+      badgeEl.textContent = 'MEMBER';
+      badgeEl.classList.remove('badge-founder');
+      statusEl.textContent = 'RESILIENT';
+      statusEl.style.color = 'var(--neon-green)'; // Neon green color
+    }
+  }
 
   // Show success block
   successContainer.style.display = 'block';
