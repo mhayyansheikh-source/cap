@@ -128,12 +128,42 @@
           </h1>
           <p class="hero-tagline">Indestructible. Adaptable. Unstoppable.</p>
           <p class="hero-desc">
-            We are mobilizing <strong>1 Crore (10 Million)</strong> resilient, forward-thinking youth to rewrite the system from scratch. Join the Cockroach Awami Party today, completely free, and become a part of the change of thinking.
+            We are mobilizing <strong>1 Crore (10 Million)</strong> resilient, forward-thinking youth to rewrite the system from scratch. Join the Cockroach Awami Party today, secure your Founding Member status, and become a part of the change of thinking.
           </p>
+
+          <!-- Founding Member Tiers Tracker -->
+          <div class="founding-tiers-tracker glass" style="margin: 1.25rem 0; padding: 1.15rem; border-radius: var(--border-radius-md); border: 1px solid var(--border-neon); background: rgba(12, 28, 18, 0.5); backdrop-filter: blur(10px); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);">
+            <h4 style="font-family: 'Sora', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--pure-white); margin-bottom: 0.85rem; display: flex; align-items: center; gap: 0.5rem; text-shadow: 0 0 10px rgba(0,255,102,0.3);">
+              <span>🔥</span> Founding Member Tiers (Before Live Meeting)
+            </h4>
+            <div class="tiers-list" style="display: flex; flex-direction: column; gap: 0.45rem; font-size: 0.82rem;">
+              <div class="tier-item" id="tier-item-1" style="display: flex; justify-content: space-between; align-items: center; padding: 0.35rem 0.65rem; border-radius: var(--border-radius-sm); border: 1px solid transparent;">
+                <span>Tier 1: First 10,000 Members</span>
+                <span class="tier-price" style="font-weight: 700; color: var(--neon-green);">FREE (0 PKR)</span>
+              </div>
+              <div class="tier-item" id="tier-item-2" style="display: flex; justify-content: space-between; align-items: center; padding: 0.35rem 0.65rem; border-radius: var(--border-radius-sm); border: 1px solid transparent;">
+                <span>Tier 2: Next 15,000 Members</span>
+                <span class="tier-price" style="font-weight: 700; color: #ffeb3b;">250 PKR</span>
+              </div>
+              <div class="tier-item" id="tier-item-3" style="display: flex; justify-content: space-between; align-items: center; padding: 0.35rem 0.65rem; border-radius: var(--border-radius-sm); border: 1px solid transparent;">
+                <span>Tier 3: Next 25,000 Members</span>
+                <span class="tier-price" style="font-weight: 700; color: #ff9800;">500 PKR</span>
+              </div>
+              <div class="tier-item" id="tier-item-4" style="display: flex; justify-content: space-between; align-items: center; padding: 0.35rem 0.65rem; border-radius: var(--border-radius-sm); border: 1px solid transparent;">
+                <span>Tier 4: Next 25,000 Members</span>
+                <span class="tier-price" style="font-weight: 700; color: #ff5722;">750 PKR</span>
+              </div>
+              <div class="tier-item" id="tier-item-5" style="display: flex; justify-content: space-between; align-items: center; padding: 0.35rem 0.65rem; border-radius: var(--border-radius-sm); border: 1px solid transparent;">
+                <span>Tier 5: Next 25,000 Members</span>
+                <span class="tier-price" style="font-weight: 700; color: #f44336;">1,000 PKR</span>
+              </div>
+            </div>
+          </div>
+
           <div class="hero-left-bottom">
             <div class="hero-actions">
               <button class="btn-primary" id="hero-primary-cta">
-                Register For Free <span>🚀</span>
+                Register Now <span>🚀</span>
               </button>
               <button class="btn-secondary" id="hero-secondary-cta">
                 Read Manifesto
@@ -145,8 +175,38 @@
           </div>
         </div>
 
+        <!-- Video Manifesto Card (Appears First) -->
+        <div class="form-wrapper glass" id="video-manifesto-section">
+          <div class="step-title-block" style="margin-bottom: 1.25rem; text-align: center;">
+            <span class="step-num-indicator" style="background: var(--neon-green-alpha); color: var(--neon-green); border: 1px solid var(--border-neon); padding: 0.25rem 0.60rem; border-radius: 50px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">Step 0: Recruitment Video</span>
+            <h3 class="step-heading" style="margin-top: 0.75rem; font-family: 'Sora', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--pure-white);">Watch the CAP Manifesto</h3>
+          </div>
+          
+          <div class="video-container" style="position: relative; width: 100%; max-width: 270px; margin: 0 auto 1.25rem auto; aspect-ratio: 9/16; border-radius: var(--border-radius-md); overflow: hidden; border: 1px solid var(--border-neon); box-shadow: 0 0 15px rgba(0, 255, 102, 0.15);">
+            <iframe src="https://www.youtube.com/embed/ax0lldI0r40?autoplay=0&rel=0&modestbranding=1" 
+                    style="position: absolute; top:0; left:0; width:100%; height:100%; border:none;" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+            </iframe>
+          </div>
+
+          <div style="text-align: center; margin-bottom: 0.5rem;">
+            <p style="font-size: 0.85rem; color: var(--text-gray); line-height: 1.45; margin-bottom: 1.25rem;">
+              Watch our official recruitment video to understand our goals, then click below to secure your Founding Member status!
+            </p>
+            <button class="btn-primary" id="btn-proceed-to-register" style="width: 100%; display: flex; justify-content: center; align-items: center; gap: 0.5rem;">
+              Proceed to Registration <span>➡️</span>
+            </button>
+          </div>
+        </div>
+
         <!-- Interactive Step-By-Step Registration Form Card -->
-        <div class="form-wrapper glass" id="registration-form-section">
+        <div class="form-wrapper glass" id="registration-form-section" style="display: none;">
+          <!-- Active Tier Badge -->
+          <div class="active-tier-form-badge" id="registration-active-price" style="text-align: center; font-size: 0.8rem; font-weight: 600; color: var(--neon-green); margin-bottom: 1.25rem; padding: 0.4rem 0.8rem; border-radius: 50px; background: rgba(0, 255, 102, 0.08); border: 1px solid var(--border-neon);">
+            Checking Active Pricing Tier...
+          </div>
+
           <!-- Form Nav steps -->
           <nav aria-label="Registration Form Progress">
             <div class="form-nav-steps">
@@ -398,6 +458,10 @@
                       <div class="card-meta">
                         <span class="card-meta-label">Status</span>
                         <span class="card-meta-value" id="card-display-status" style="color: var(--neon-green);">RESILIENT</span>
+                      </div>
+                      <div class="card-meta">
+                        <span class="card-meta-label">Tier</span>
+                        <span class="card-meta-value" id="card-display-tier" style="color: var(--text-white);">Free (Tier 1)</span>
                       </div>
                     </div>
                   </div>

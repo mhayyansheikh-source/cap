@@ -1307,7 +1307,39 @@ header.scrolled {
 
 .card-meta-row {
   display: flex;
-  gap: clamp(0.75rem, 3.5cqw, 1.25rem);
+  flex-wrap: wrap;
+  gap: clamp(0.5rem, 3cqw, 1rem);
+}
+
+/* Founding Member Pricing Tier Styles */
+.tier-item {
+  transition: var(--transition-smooth);
+  border: 1px solid transparent;
+}
+
+.tier-item.active {
+  border-color: var(--neon-green) !important;
+  background: rgba(0, 255, 102, 0.12) !important;
+  box-shadow: 0 0 12px rgba(0, 255, 102, 0.2);
+  position: relative;
+}
+
+.tier-item.active::after {
+  content: '★ ACTIVE';
+  font-size: 0.65rem;
+  color: var(--neon-green);
+  font-weight: 800;
+  margin-left: 0.5rem;
+  letter-spacing: 0.05em;
+}
+
+.tier-item.filled {
+  opacity: 0.35;
+  text-decoration: line-through;
+}
+
+.tier-item.filled .tier-price {
+  color: var(--text-gray) !important;
 }
 
 .card-meta {

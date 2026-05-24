@@ -1,4 +1,4 @@
-// --- 1. Navigation & Scroll Effects ---
+// --- 1. Navigation, Video & Scroll Effects ---
 const header = document.getElementById('main-header');
 window.addEventListener('scroll', () => {
   if (window.scrollY > 50) {
@@ -8,33 +8,84 @@ window.addEventListener('scroll', () => {
   }
 });
 
+// Transition from video to registration form
+function proceedToRegistration() {
+  const videoSection = document.getElementById('video-manifesto-section');
+  const regFormSection = document.getElementById('registration-form-section');
+  if (!videoSection || !regFormSection) return;
+
+  videoSection.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+  regFormSection.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+
+  videoSection.style.opacity = '0';
+  videoSection.style.transform = 'translateY(-10px)';
+
+  setTimeout(() => {
+    videoSection.style.display = 'none';
+    regFormSection.style.display = 'block';
+    regFormSection.style.opacity = '0';
+    regFormSection.style.transform = 'translateY(10px)';
+
+    // Trigger reflow
+    regFormSection.offsetHeight;
+
+    regFormSection.style.opacity = '1';
+    regFormSection.style.transform = 'translateY(0)';
+  }, 400);
+}
+
 function scrollToForm() {
-  const formSection = document.getElementById('registration-form-section');
-  formSection.scrollIntoView({ behavior: 'smooth' });
+  const videoSection = document.getElementById('video-manifesto-section');
+  const regFormSection = document.getElementById('registration-form-section');
+
+  if (videoSection && videoSection.style.display !== 'none') {
+    proceedToRegistration();
+    setTimeout(() => {
+      if (regFormSection) regFormSection.scrollIntoView({ behavior: 'smooth' });
+    }, 450);
+  } else if (regFormSection) {
+    regFormSection.scrollIntoView({ behavior: 'smooth' });
+  }
 }
 
 function scrollToManifesto() {
   const manifestoSection = document.getElementById('manifesto-section');
-  manifestoSection.scrollIntoView({ behavior: 'smooth' });
+  if (manifestoSection) manifestoSection.scrollIntoView({ behavior: 'smooth' });
 }
 
-// Bind navigation click listeners (removing inline onclick dependencies)
+// Bind navigation click listeners
 document.addEventListener('DOMContentLoaded', () => {
   const navCtaBtn = document.getElementById('nav-cta-btn');
   const heroPrimaryCta = document.getElementById('hero-primary-cta');
   const heroSecondaryCta = document.getElementById('hero-secondary-cta');
+  const btnProceed = document.getElementById('btn-proceed-to-register');
 
   if (navCtaBtn) navCtaBtn.addEventListener('click', scrollToForm);
+  
   if (heroPrimaryCta) {
     heroPrimaryCta.addEventListener('click', () => {
-      const nameInput = document.getElementById('full-name');
-      if (nameInput) {
-        nameInput.focus();
-        nameInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const videoSection = document.getElementById('video-manifesto-section');
+      if (videoSection && videoSection.style.display !== 'none') {
+        proceedToRegistration();
+        setTimeout(() => {
+          const nameInput = document.getElementById('full-name');
+          if (nameInput) {
+            nameInput.focus();
+            nameInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 450);
+      } else {
+        const nameInput = document.getElementById('full-name');
+        if (nameInput) {
+          nameInput.focus();
+          nameInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
       }
     });
   }
+
   if (heroSecondaryCta) heroSecondaryCta.addEventListener('click', scrollToManifesto);
+  if (btnProceed) btnProceed.addEventListener('click', proceedToRegistration);
 });
 
 // --- 2. Live Registration Counter — Vercel KV Backed ---
@@ -54,6 +105,67 @@ let celebrated = localStorage.getItem('cap_100k_celebrated') === 'true';
 // Helper to format numbers with commas
 function formatNumberWithCommas(num) {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+// --- Founding Member Tiers & Pricing Calculation ---
+function getFoundingTier(serial) {
+  const num = parseInt(String(serial).replace(/,/g, ''), 10);
+  if (num <= 10000) {
+    return { name: 'Tier 1', price: 'Free', isFounding: true, desc: 'Free (Tier 1)' };
+  } else if (num <= 25000) {
+    return { name: 'Tier 2', price: '250 PKR', isFounding: true, desc: '250 PKR (Tier 2)' };
+  } else if (num <= 50000) {
+    return { name: 'Tier 3', price: '500 PKR', isFounding: true, desc: '500 PKR (Tier 3)' };
+  } else if (num <= 75000) {
+    return { name: 'Tier 4', price: '750 PKR', isFounding: true, desc: '750 PKR (Tier 4)' };
+  } else if (num <= 100000) {
+    return { name: 'Tier 5', price: '1000 PKR', isFounding: true, desc: '1,000 PKR (Tier 5)' };
+  } else {
+    return { name: 'Standard', price: 'Standard', isFounding: false, desc: 'Standard Member' };
+  }
+}
+
+function getTierMax(tierIndex) {
+  if (tierIndex === 1) return 10000;
+  if (tierIndex === 2) return 25000;
+  if (tierIndex === 3) return 50000;
+  if (tierIndex === 4) return 75000;
+  if (tierIndex === 5) return 100000;
+  return Infinity;
+}
+
+function updateActiveTierDisplay() {
+  const nextSerial = currentCount + 1;
+  const activeTier = getFoundingTier(nextSerial);
+  
+  // Update left column tracker items
+  for (let i = 1; i <= 5; i++) {
+    const tierItem = document.getElementById(`tier-item-${i}`);
+    if (tierItem) {
+      tierItem.classList.remove('active', 'filled');
+      if (activeTier.name === `Tier ${i}`) {
+        tierItem.classList.add('active');
+      } else if (nextSerial > getTierMax(i)) {
+        tierItem.classList.add('filled');
+      }
+    }
+  }
+
+  // Update dynamic price/tier label in form
+  const formPriceEl = document.getElementById('registration-active-price');
+  if (formPriceEl) {
+    if (activeTier.isFounding) {
+      formPriceEl.textContent = `⚡ Active Pricing Tier: ${activeTier.price} (${activeTier.name}) — Founding Status Guaranteed!`;
+      formPriceEl.style.color = 'var(--neon-green)';
+      formPriceEl.style.borderColor = 'var(--border-neon)';
+      formPriceEl.style.background = 'rgba(0, 255, 102, 0.08)';
+    } else {
+      formPriceEl.textContent = `📅 Registration Status: Active (First Live Meeting Launched)`;
+      formPriceEl.style.color = 'var(--text-gray)';
+      formPriceEl.style.borderColor = 'var(--border-glass)';
+      formPriceEl.style.background = 'rgba(255, 255, 255, 0.02)';
+    }
+  }
 }
 
 // Render the counter digits into the DOM
@@ -82,6 +194,9 @@ function updateCounterDOM() {
 
   // Milestone triggers
   updateMilestoneRoadmap();
+
+  // Update pricing tiers tracker
+  updateActiveTierDisplay();
 }
 
 function updateMilestoneRoadmap() {
@@ -754,6 +869,14 @@ function generateUniqueMemberID() {
 }
 
 function displayRegistrationSuccess(data) {
+  // Hide video manifesto section if visible
+  const videoSection = document.getElementById('video-manifesto-section');
+  if (videoSection) videoSection.style.display = 'none';
+  
+  // Ensure registration section is visible
+  const regFormSection = document.getElementById('registration-form-section');
+  if (regFormSection) regFormSection.style.display = 'block';
+
   // Hide form content
   form.style.display = 'none';
   const formNavSteps = document.querySelector('.form-nav-steps');
@@ -776,13 +899,14 @@ function displayRegistrationSuccess(data) {
     }
   }
 
-  // Update badge and status based on Founding Member logic (first 100 registrations)
+  // Update badge, status, and tier based on Founding Member logic (first 100,000 registrations)
   const badgeEl = document.getElementById('card-display-badge');
   const statusEl = document.getElementById('card-display-status');
+  const tierEl = document.getElementById('card-display-tier');
   const serialNum = data.serialNum || parseInt(String(data.serial).replace(/,/g, ''), 10);
   
   if (badgeEl && statusEl) {
-    if (serialNum <= 100) {
+    if (serialNum <= 100000) {
       badgeEl.textContent = 'FOUNDING MEMBER';
       badgeEl.classList.add('badge-founder');
       statusEl.textContent = 'FOUNDER';
@@ -792,6 +916,17 @@ function displayRegistrationSuccess(data) {
       badgeEl.classList.remove('badge-founder');
       statusEl.textContent = 'RESILIENT';
       statusEl.style.color = 'var(--neon-green)'; // Neon green color
+    }
+  }
+
+  // Update tier element on card
+  if (tierEl) {
+    const activeTier = getFoundingTier(serialNum);
+    tierEl.textContent = activeTier.desc;
+    if (activeTier.isFounding) {
+      tierEl.style.color = '#ffd700'; // Gold color matching styling
+    } else {
+      tierEl.style.color = 'var(--text-white)';
     }
   }
 
