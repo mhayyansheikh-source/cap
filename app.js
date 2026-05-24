@@ -577,14 +577,12 @@ function updateCardVisibility() {
   const nameInput = document.getElementById('full-name');
   const citySelect = document.getElementById('city');
   const skillSelect = document.getElementById('digital-skill');
-  const photoInput = document.getElementById('profile-photo');
 
   const hasName  = nameInput  && nameInput.value.trim().length > 0;
   const hasCity  = citySelect && citySelect.value !== '';
   const hasSkill = skillSelect && skillSelect.value !== '';
-  const hasPhoto = photoInput && photoInput.files && photoInput.files.length > 0;
 
-  const shouldReveal = hasName || hasCity || hasSkill || hasPhoto;
+  const shouldReveal = hasName || hasCity || hasSkill;
 
   if (shouldReveal) {
     cardColumn.classList.add('revealed');
@@ -612,7 +610,6 @@ function setupLiveCardSync() {
   const nameInput = document.getElementById('full-name');
   const citySelect = document.getElementById('city');
   const skillSelect = document.getElementById('digital-skill');
-  const photoInput = document.getElementById('profile-photo');
 
   const cardName = document.getElementById('card-display-name');
   const cardCity = document.getElementById('card-display-city');
@@ -642,12 +639,6 @@ function setupLiveCardSync() {
     });
   }
 
-  if (photoInput) {
-    photoInput.addEventListener('change', () => {
-      updateCardVisibility();
-    });
-  }
-
   // Initial founder-card class update on page load
   updateFounderCardClass();
 }
@@ -667,69 +658,7 @@ const submitSpinner = document.getElementById('submit-spinner');
 let currentStep = 1;
 const totalSteps = steps.length;
 
-// --- Profile Photo Upload Logic ---
-const fileInput = document.getElementById('profile-photo');
-const fileTrigger = document.getElementById('file-upload-trigger');
-const previewContainer = document.getElementById('photo-preview-container');
-const photoPreview = document.getElementById('photo-preview');
-const btnRemovePhoto = document.getElementById('btn-remove-photo');
-const uploadStatusText = document.getElementById('upload-status-text');
-
 let uploadedPhotoBase64 = null;
-
-if (fileTrigger && fileInput) {
-  fileTrigger.addEventListener('click', () => fileInput.click());
-}
-
-if (fileInput) {
-  fileInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    // Validate size (Max 2MB)
-    if (file.size > 2 * 1024 * 1024) {
-      alert('⚠️ Image size must be less than 2MB.');
-      fileInput.value = '';
-      return;
-    }
-
-    // Validate type
-    if (!file.type.startsWith('image/')) {
-      alert('⚠️ Please upload an image file.');
-      fileInput.value = '';
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      uploadedPhotoBase64 = event.target.result;
-      if (photoPreview) photoPreview.src = uploadedPhotoBase64;
-      const cardDisplayPhoto = document.getElementById('card-display-photo');
-      if (cardDisplayPhoto) cardDisplayPhoto.src = uploadedPhotoBase64;
-      if (previewContainer) previewContainer.style.display = 'flex';
-      if (uploadStatusText) {
-        uploadStatusText.textContent = `Selected: ${file.name}`;
-        uploadStatusText.style.color = 'var(--neon-green)';
-      }
-    };
-    reader.readAsDataURL(file);
-  });
-}
-
-if (btnRemovePhoto) {
-  btnRemovePhoto.addEventListener('click', () => {
-    if (fileInput) fileInput.value = '';
-    uploadedPhotoBase64 = null;
-    if (previewContainer) previewContainer.style.display = 'none';
-    if (photoPreview) photoPreview.src = '';
-    const cardDisplayPhoto = document.getElementById('card-display-photo');
-    if (cardDisplayPhoto) cardDisplayPhoto.src = 'assets/mascot.png';
-    if (uploadStatusText) {
-      uploadStatusText.textContent = 'Upload your photo (JPG, PNG - Max 2MB)';
-      uploadStatusText.style.color = 'var(--text-gray)';
-    }
-  });
-}
 
 function updateFormNav() {
   // Update step progress line width
@@ -792,13 +721,8 @@ function validateStep(step) {
     }
   }
 
-  // ─── Step 2: Photo (optional — always valid) ────────────────────────────────
+  // ─── Step 2: Age + Gender ───────────────────────────────────────────────────
   if (step === 2) {
-    isValid = true; // photo is optional
-  }
-
-  // ─── Step 3: Age + Gender ───────────────────────────────────────────────────
-  if (step === 3) {
     const ageInput = document.getElementById('age');
     const ageVal = parseInt(ageInput.value);
     const genderVal = document.getElementById('gender').value;
@@ -824,8 +748,8 @@ function validateStep(step) {
     }
   }
 
-  // ─── Step 4: Email + Phone ──────────────────────────────────────────────────
-  if (step === 4) {
+  // ─── Step 3: Email + Phone ──────────────────────────────────────────────────
+  if (step === 3) {
     const emailInput = document.getElementById('email');
     const emailVal = emailInput.value.trim();
     const phoneInput = document.getElementById('phone');
@@ -854,8 +778,8 @@ function validateStep(step) {
     }
   }
 
-  // ─── Step 5: City + Skill ───────────────────────────────────────────────────
-  if (step === 5) {
+  // ─── Step 4: City + Skill ───────────────────────────────────────────────────
+  if (step === 4) {
     const cityVal = document.getElementById('city').value;
     const skillSelect = document.getElementById('digital-skill');
     const skillVal = skillSelect.value;
@@ -881,8 +805,8 @@ function validateStep(step) {
     }
   }
 
-  // ─── Step 6: Interests + Pledge ─────────────────────────────────────────────
-  if (step === 6) {
+  // ─── Step 5: Interests + Pledge ─────────────────────────────────────────────
+  if (step === 5) {
     const interests = document.querySelectorAll('input[name="interests"]:checked');
     const errorInterests = document.getElementById('error-interests');
     if (interests.length === 0) {
@@ -995,7 +919,7 @@ form.addEventListener('input', (e) => {
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  if (!validateStep(4)) return;
+  if (!validateStep(totalSteps)) return;
 
   btnSubmit.disabled = true;
   submitSpinner.style.display = 'inline-block';
@@ -1049,15 +973,7 @@ form.addEventListener('submit', async (e) => {
       // Clear form and display success UI with real DB card data
       form.reset();
 
-      // Reset photo upload UI elements
-      if (fileInput) fileInput.value = '';
       uploadedPhotoBase64 = null;
-      if (previewContainer) previewContainer.style.display = 'none';
-      if (photoPreview) photoPreview.src = '';
-      if (uploadStatusText) {
-        uploadStatusText.textContent = 'Upload your photo (JPG, PNG - Max 2MB)';
-        uploadStatusText.style.color = 'var(--text-gray)';
-      }
 
       displayRegistrationSuccess(registrationData);
       startConfetti();
