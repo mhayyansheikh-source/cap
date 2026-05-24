@@ -1923,25 +1923,52 @@ footer {
    RESPONSIVE OVERRIDES - Tablet (max 1024px)
    ========================================================= */
 @media (max-width: 1024px) {
+  .hero-content {
+    display: contents;
+  }
+
   .hero-grid {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 1rem;
     text-align: center;
   }
   
   .badge {
+    order: 1;
     align-self: center;
   }
   
-  .hero-desc {
-    margin: 0 auto;
+  .hero-title {
+    order: 2;
   }
   
-  .hero-actions {
-    justify-content: center;
+  .hero-tagline {
+    order: 3;
+  }
+  
+  #video-manifesto-section,
+  #registration-form-section {
+    order: 4;
+    margin: 1.5rem auto;
+    width: 100%;
+    max-width: 480px;
+  }
+  
+  .hero-desc {
+    order: 5;
+    margin: 0.5rem auto 0 auto;
+    max-width: 600px;
+  }
+  
+  .founding-tiers-tracker {
+    order: 6;
+    margin: 0.5rem auto 0 auto;
+    width: 100%;
+    max-width: 600px;
   }
 
   .hero-left-bottom {
+    order: 7;
     flex-direction: column-reverse;
     gap: 1.5rem;
     align-items: center;
@@ -1992,7 +2019,7 @@ footer {
   }
 
   .hero-grid {
-    gap: 2.5rem;
+    gap: 1rem;
   }
 
   .hero-title {
