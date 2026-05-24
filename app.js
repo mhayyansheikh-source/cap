@@ -778,27 +778,33 @@ function updateFormNav() {
 function validateStep(step) {
   let isValid = true;
 
+  // ─── Step 1: Name ───────────────────────────────────────────────────────────
   if (step === 1) {
-    const nameVal = document.getElementById('full-name').value.trim();
-    const ageInput = document.getElementById('age');
-    const ageVal = parseInt(ageInput.value);
-    const genderVal = document.getElementById('gender').value;
-
+    const nameInput = document.getElementById('full-name');
     const errorName = document.getElementById('error-name');
-    const errorAge = document.getElementById('error-age');
-    const errorGender = document.getElementById('error-gender');
-
-    // Name
-    if (nameVal.length < 3) {
+    if (nameInput.value.trim().length < 3) {
       errorName.style.display = 'block';
-      document.getElementById('full-name').classList.add('invalid');
+      nameInput.classList.add('invalid');
       isValid = false;
     } else {
       errorName.style.display = 'none';
-      document.getElementById('full-name').classList.remove('invalid');
+      nameInput.classList.remove('invalid');
     }
+  }
 
-    // Age (18 - 40)
+  // ─── Step 2: Photo (optional — always valid) ────────────────────────────────
+  if (step === 2) {
+    isValid = true; // photo is optional
+  }
+
+  // ─── Step 3: Age + Gender ───────────────────────────────────────────────────
+  if (step === 3) {
+    const ageInput = document.getElementById('age');
+    const ageVal = parseInt(ageInput.value);
+    const genderVal = document.getElementById('gender').value;
+    const errorAge = document.getElementById('error-age');
+    const errorGender = document.getElementById('error-gender');
+
     if (isNaN(ageVal) || ageVal < 18 || ageVal > 40) {
       errorAge.style.display = 'block';
       ageInput.classList.add('invalid');
@@ -808,7 +814,6 @@ function validateStep(step) {
       ageInput.classList.remove('invalid');
     }
 
-    // Gender
     if (!genderVal) {
       errorGender.style.display = 'block';
       document.getElementById('gender').classList.add('invalid');
@@ -819,18 +824,15 @@ function validateStep(step) {
     }
   }
 
-  if (step === 2) {
+  // ─── Step 4: Email + Phone ──────────────────────────────────────────────────
+  if (step === 4) {
     const emailInput = document.getElementById('email');
     const emailVal = emailInput.value.trim();
     const phoneInput = document.getElementById('phone');
     const phoneVal = phoneInput.value.trim();
-    const cityVal = document.getElementById('city').value;
-
     const errorEmail = document.getElementById('error-email');
     const errorPhone = document.getElementById('error-phone');
-    const errorCity = document.getElementById('error-city');
 
-    // Email Check
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(emailVal)) {
       errorEmail.style.display = 'block';
@@ -841,9 +843,8 @@ function validateStep(step) {
       emailInput.classList.remove('invalid');
     }
 
-    // Phone Check (Pakistani standard)
     const phoneRegex = /^(03[0-9]{9})|(\+923[0-9]{9})$/;
-    if (!phoneRegex.test(phoneVal.replace(/[-\s]/g, ""))) {
+    if (!phoneRegex.test(phoneVal.replace(/[-\s]/g, ''))) {
       errorPhone.style.display = 'block';
       phoneInput.classList.add('invalid');
       isValid = false;
@@ -851,8 +852,16 @@ function validateStep(step) {
       errorPhone.style.display = 'none';
       phoneInput.classList.remove('invalid');
     }
+  }
 
-    // City Check
+  // ─── Step 5: City + Skill ───────────────────────────────────────────────────
+  if (step === 5) {
+    const cityVal = document.getElementById('city').value;
+    const skillSelect = document.getElementById('digital-skill');
+    const skillVal = skillSelect.value;
+    const errorCity = document.getElementById('error-city');
+    const errorSkill = document.getElementById('error-skill');
+
     if (!cityVal) {
       errorCity.style.display = 'block';
       document.getElementById('city').classList.add('invalid');
@@ -861,24 +870,6 @@ function validateStep(step) {
       errorCity.style.display = 'none';
       document.getElementById('city').classList.remove('invalid');
     }
-  }
-
-  if (step === 3) {
-    // Interest Checkbox verification (At least one)
-    const interests = document.querySelectorAll('input[name="interests"]:checked');
-    const errorInterests = document.getElementById('error-interests');
-    
-    if (interests.length === 0) {
-      errorInterests.style.display = 'block';
-      isValid = false;
-    } else {
-      errorInterests.style.display = 'none';
-    }
-
-    // Skill Dropdown verification
-    const skillSelect = document.getElementById('digital-skill');
-    const skillVal = skillSelect.value;
-    const errorSkill = document.getElementById('error-skill');
 
     if (!skillVal) {
       errorSkill.style.display = 'block';
@@ -890,11 +881,19 @@ function validateStep(step) {
     }
   }
 
-  if (step === 4) {
-    // Pledge agreement
+  // ─── Step 6: Interests + Pledge ─────────────────────────────────────────────
+  if (step === 6) {
+    const interests = document.querySelectorAll('input[name="interests"]:checked');
+    const errorInterests = document.getElementById('error-interests');
+    if (interests.length === 0) {
+      errorInterests.style.display = 'block';
+      isValid = false;
+    } else {
+      errorInterests.style.display = 'none';
+    }
+
     const pledgeChk = document.getElementById('pledge-chk');
     const errorPledge = document.getElementById('error-pledge');
-
     if (!pledgeChk.checked) {
       errorPledge.style.display = 'block';
       isValid = false;
@@ -905,6 +904,7 @@ function validateStep(step) {
 
   return isValid;
 }
+
 
 btnNext.addEventListener('click', () => {
   if (validateStep(currentStep)) {
