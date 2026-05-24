@@ -284,6 +284,12 @@ function updateCounterDOM() {
     }
   }
 
+  // Sync floating counter
+  const floatingCountEl = document.getElementById('floating-reg-count');
+  if (floatingCountEl) {
+    floatingCountEl.textContent = formattedStr;
+  }
+
   // Update progress bar
   const pct = (currentCount / targetGoal) * 100;
   progressBar.style.width = `${pct}%`;
@@ -1452,5 +1458,13 @@ function handleNavSearch(event) {
       searchInput.placeholder = originalPlaceholder;
       searchInput.classList.remove('search-error-flash');
     }, 3000);
+  }
+}
+
+// Scroll to Roadmap section helper
+function scrollToRoadmap() {
+  const milestonesSection = document.getElementById('milestones-section');
+  if (milestonesSection) {
+    milestonesSection.scrollIntoView({ behavior: 'smooth' });
   }
 }

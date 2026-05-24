@@ -148,6 +148,14 @@
       <a href="#" class="logo navbar-brand d-flex align-items-center gap-2 fw-bold text-white fs-4" aria-label="Cockroach Awami Party Homepage">
         <span class="logo-icon">🪳</span>CAP<span>.</span>
       </a>
+
+      <!-- Always visible Search Bar next to logo -->
+      <form class="d-flex search-form-header ms-2 me-auto" role="search" onsubmit="handleNavSearch(event)">
+        <div class="search-input-wrapper position-relative">
+          <input class="form-control form-control-sm search-input-header" type="search" placeholder="Search..." aria-label="Search" id="nav-search-input">
+          <span class="search-icon-inside">🔍</span>
+        </div>
+      </form>
       
       <!-- Hamburger Menu Button for Mobile -->
       <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -169,12 +177,6 @@
           </li>
         </ul>
         <div class="d-flex align-items-center gap-3 nav-actions flex-wrap flex-lg-nowrap">
-          <form class="d-flex search-form" role="search" onsubmit="handleNavSearch(event)">
-            <div class="search-input-wrapper position-relative">
-              <input class="form-control form-control-sm search-input" type="search" placeholder="Search CAP..." aria-label="Search" id="nav-search-input">
-              <span class="search-icon-inside">🔍</span>
-            </div>
-          </form>
           <a href="https://www.facebook.com/cockroachawamipartyofficial" target="_blank" rel="noopener noreferrer" class="btn-fb-nav btn btn-outline-primary btn-sm rounded-pill px-3 py-2 text-white border-primary" style="font-size: 0.85rem;" aria-label="Join our Facebook Community">
             <span>👍</span> Join Facebook
           </a>
@@ -1115,6 +1117,15 @@
       </div>
     </div>
   </footer>
+
+  <!-- Floating Live Registration Tracker Widget -->
+  <div class="floating-live-counter glass" id="floating-live-counter" onclick="scrollToRoadmap()">
+    <span class="live-dot-pulse"></span>
+    <div class="floating-counter-content">
+      <span class="floating-counter-label">LIVE REGISTRATIONS</span>
+      <span class="floating-counter-val" id="floating-reg-count">0</span>
+    </div>
+  </div>
 
   <!-- html2canvas — for capturing the member card as a PNG image -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
