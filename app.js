@@ -84,6 +84,57 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (heroSecondaryCta) heroSecondaryCta.addEventListener('click', scrollToManifesto);
+
+  // Mobile Hamburger Menu Toggle Logic
+  const hamburgerBtn = document.getElementById('hamburger-menu-btn');
+  const mobileDrawer = document.getElementById('mobile-nav-drawer');
+  const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+  const mobileNavCta = document.getElementById('mobile-nav-cta-btn');
+
+  function toggleMobileMenu() {
+    if (!hamburgerBtn || !mobileDrawer) return;
+    const isOpen = mobileDrawer.classList.toggle('open');
+    hamburgerBtn.classList.toggle('is-open', isOpen);
+    hamburgerBtn.setAttribute('aria-expanded', String(isOpen));
+    
+    // Disable body scroll when menu is open
+    if (isOpen) {
+      document.body.classList.add('splash-active');
+    } else {
+      // Only remove if the splash overlay itself is also gone
+      const splashOverlay = document.getElementById('video-splash-overlay');
+      if (!splashOverlay || splashOverlay.classList.contains('hidden')) {
+        document.body.classList.remove('splash-active');
+      }
+    }
+  }
+
+  function closeMobileMenu() {
+    if (!hamburgerBtn || !mobileDrawer) return;
+    mobileDrawer.classList.remove('open');
+    hamburgerBtn.classList.remove('is-open');
+    hamburgerBtn.setAttribute('aria-expanded', 'false');
+    
+    // Restore body scroll (if splash screen is not active)
+    const splashOverlay = document.getElementById('video-splash-overlay');
+    if (!splashOverlay || splashOverlay.classList.contains('hidden')) {
+      document.body.classList.remove('splash-active');
+    }
+  }
+
+  if (hamburgerBtn) hamburgerBtn.addEventListener('click', toggleMobileMenu);
+
+  // Close menu when any drawer link is clicked
+  mobileNavLinks.forEach(link => {
+    link.addEventListener('click', closeMobileMenu);
+  });
+
+  if (mobileNavCta) {
+    mobileNavCta.addEventListener('click', () => {
+      closeMobileMenu();
+      scrollToForm();
+    });
+  }
 });
 
 // --- 2. Live Registration Counter — Vercel KV Backed ---

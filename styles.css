@@ -270,6 +270,59 @@ header.scrolled {
   cursor: pointer;
 }
 
+/* New Desktop Navigation styles */
+.nav-menu {
+  display: block;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-link-item {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-white);
+  text-decoration: none;
+  transition: var(--transition-smooth);
+}
+
+.nav-link-item:hover {
+  color: var(--neon-green);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn-fb-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(24, 119, 242, 0.1);
+  border: 1px solid rgba(24, 119, 242, 0.4);
+  color: #1877f2;
+  font-weight: 700;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--border-radius-sm);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: var(--transition-smooth);
+}
+
+.btn-fb-nav:hover {
+  background: #1877f2;
+  color: white;
+  box-shadow: 0 0 15px rgba(24, 119, 242, 0.4);
+  border-color: #1877f2;
+}
+
 .nav-cta:hover {
   transform: scale(1.05);
   box-shadow: 0 0 25px rgba(0, 255, 102, 0.6);
@@ -1842,7 +1895,7 @@ footer {
 
 /* Mobile Nav Drawer */
 .mobile-nav-drawer {
-  display: none;
+  display: flex;
   position: fixed;
   top: 0;
   left: 0;
@@ -1923,6 +1976,15 @@ footer {
    RESPONSIVE OVERRIDES - Tablet (max 1024px)
    ========================================================= */
 @media (max-width: 1024px) {
+  .nav-menu,
+  .nav-actions {
+    display: none !important;
+  }
+
+  .hamburger {
+    display: flex !important;
+  }
+
   .hero-content {
     display: contents;
   }
@@ -3066,6 +3128,7 @@ footer {
   transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.5s;
   visibility: visible;
   opacity: 1;
+  overflow-y: auto; /* Enable scroll if height overflows on small screens */
 }
 
 .video-splash-overlay.hidden {
@@ -3077,7 +3140,7 @@ footer {
 .video-splash-card {
   width: 100%;
   max-width: 440px;
-  padding: 2rem;
+  padding: 1.5rem;
   border-radius: var(--border-radius-lg);
   border: 1px solid var(--border-neon);
   box-shadow: 0 0 35px rgba(0, 255, 102, 0.2);
@@ -3085,6 +3148,7 @@ footer {
   backdrop-filter: blur(15px);
   text-align: center;
   transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  margin: auto; /* Keep card centered in scrollable space */
 }
 
 .video-splash-overlay.hidden .video-splash-card {
@@ -3094,6 +3158,26 @@ footer {
 body.splash-active {
   overflow: hidden !important;
   height: 100vh !important;
+}
+
+/* Landscape / short-screen media query for video splash screen card */
+@media (max-height: 640px) {
+  .video-splash-card {
+    padding: 1rem !important;
+  }
+  .video-splash-card .video-container {
+    max-width: 180px !important;
+    margin-bottom: 0.75rem !important;
+  }
+  .video-splash-card p {
+    margin-bottom: 0.75rem !important;
+    font-size: 0.8rem !important;
+    line-height: 1.35 !important;
+  }
+  .video-splash-card .btn-primary {
+    padding: 0.75rem 1.25rem !important;
+    font-size: 0.9rem !important;
+  }
 }
 
 
