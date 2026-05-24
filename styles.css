@@ -402,6 +402,7 @@ header.scrolled {
 
 .hero-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   margin-top: 1rem;
 }
@@ -420,6 +421,7 @@ header.scrolled {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  white-space: nowrap;
 }
 
 .btn-primary:hover {
@@ -437,6 +439,7 @@ header.scrolled {
   font-size: 1.05rem;
   cursor: pointer;
   transition: var(--transition-smooth);
+  white-space: nowrap;
 }
 
 .btn-secondary:hover {
@@ -447,8 +450,9 @@ header.scrolled {
 
 .hero-left-bottom {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
   margin-top: 1rem;
 }
 
@@ -503,11 +507,13 @@ header.scrolled {
   color: var(--pure-white);
   font-family: 'Sora', sans-serif;
   text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+  white-space: nowrap;
 }
 
 .stat-value.neon-val {
   color: var(--neon-green);
   text-shadow: 0 0 15px rgba(0, 255, 102, 0.4);
+  white-space: nowrap;
 }
 
 .stat-label {
@@ -1322,13 +1328,16 @@ header.scrolled {
   background: linear-gradient(var(--in-oklab) 135deg, #081d11 0%, #030805 100%);
   border: 1px solid var(--border-neon);
   border-radius: var(--border-radius-md);
-  padding: clamp(0.75rem, 5cqw, 1.5rem);
+  padding: clamp(0.5rem, 4.2cqw, 1.25rem);
   position: relative;
   text-align: left;
   overflow: hidden;
   box-shadow: 0 15px 35px rgba(0, 255, 102, 0.25);
   transition: transform 0.1s ease;
   transform-style: preserve-3d;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 /* Futuristic chip & lines */
@@ -1360,7 +1369,7 @@ header.scrolled {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-block-end: clamp(0.75rem, 5cqw, 1.5rem);
+  margin-block-end: clamp(0.3rem, 2.5cqw, 0.75rem);
   position: relative;
   z-index: 2;
 }
@@ -1378,7 +1387,7 @@ header.scrolled {
   display: block;
   font-size: clamp(0.5rem, 3.2cqw, 0.75rem);
   letter-spacing: 0.15em;
-  margin-top: 0.25rem;
+  margin-top: 0.2rem;
 }
 
 .card-badge {
@@ -1428,12 +1437,12 @@ header.scrolled {
 }
 
 .card-chip {
-  width: clamp(24px, 10cqw, 38px);
-  height: clamp(18px, 7.5cqw, 28px);
+  width: clamp(24px, 9cqw, 36px);
+  height: clamp(18px, 6.8cqw, 26px);
   background: linear-gradient(135deg, #ffe066, #d4af37 40%, #aa8000 80%, #ffd700);
   border-radius: 6px;
   position: relative;
-  margin-bottom: clamp(0.5rem, 3.5cqw, 1rem);
+  margin-bottom: clamp(0.25rem, 2cqw, 0.5rem);
   z-index: 2;
   box-shadow: 
     0 1px 3px rgba(0,0,0,0.3),
@@ -1474,9 +1483,9 @@ header.scrolled {
 .card-body {
   position: relative;
   z-index: 2;
-  margin-bottom: clamp(0.75rem, 5cqw, 1.5rem);
+  margin-bottom: clamp(0.3rem, 2.5cqw, 0.75rem);
   display: flex;
-  gap: clamp(0.75rem, 4cqw, 1.25rem);
+  gap: clamp(0.5rem, 3.5cqw, 1rem);
   align-items: center;
 }
 
@@ -1485,8 +1494,8 @@ header.scrolled {
 }
 
 .card-photo-box {
-  width: clamp(70px, 20cqw, 85px);
-  height: clamp(85px, 24cqw, 100px);
+  width: clamp(55px, 18cqw, 85px);
+  height: clamp(65px, 22cqw, 100px);
   border-radius: var(--border-radius-sm);
   border: 1px solid var(--border-neon);
   box-shadow: 0 0 10px rgba(0, 255, 102, 0.15);
@@ -1505,13 +1514,13 @@ header.scrolled {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: clamp(0.15rem, 1.2cqw, 0.3rem);
   overflow: hidden;
 }
 
 .card-name {
   font-family: 'Sora', sans-serif;
-  font-size: clamp(0.95rem, 5.5cqw, 1.25rem);
+  font-size: clamp(0.8rem, 4.8cqw, 1.15rem);
   font-weight: 700;
   color: var(--pure-white);
   text-shadow: 0 2px 4px rgba(0,0,0,0.5);
@@ -1522,9 +1531,10 @@ header.scrolled {
 }
 
 .card-meta-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: clamp(0.5rem, 3cqw, 1rem);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: clamp(0.1rem, 0.8cqw, 0.2rem);
+  column-gap: clamp(0.4rem, 2.5cqw, 0.8rem);
 }
 
 /* Founding Member Pricing Tier Styles */
@@ -1564,14 +1574,14 @@ header.scrolled {
 }
 
 .card-meta-label {
-  font-size: clamp(0.5rem, 3cqw, 0.65rem);
+  font-size: clamp(0.45rem, 2.6cqw, 0.6rem);
   color: var(--text-gray);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .card-meta-value {
-  font-size: clamp(0.65rem, 3.8cqw, 0.85rem);
+  font-size: clamp(0.55rem, 3.2cqw, 0.78rem);
   font-weight: 600;
   color: var(--text-white);
 }
@@ -1586,7 +1596,7 @@ header.scrolled {
 
 .card-id {
   font-family: monospace;
-  font-size: clamp(0.75rem, 4.5cqw, 1.05rem);
+  font-size: clamp(0.65rem, 3.8cqw, 0.95rem);
   letter-spacing: 0.1em;
   color: var(--neon-green);
   text-shadow: 0 0 8px rgba(0, 255, 102, 0.4);
