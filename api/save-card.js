@@ -5,7 +5,19 @@
 // POST /api/save-card → { ok: true, cardUrl, downloadDeadline, deleteAt }
 
 import { put, del, list } from '@vercel/blob';
-import { kv } from '@vercel/kv';
+import { createClient } from 'redis';
+
+let redisClient;
+async function getRedis() {
+  if (!redisClient) {
+    redisClient = createClient({
+      url: process.env.KV_URL || process.env.REDIS_URL
+    });
+    redisClient.on('error', (err) => console.error('Redis Client Error', err));
+    await redisClient.connect();
+  }
+  return redisClient;
+}
 
 const TWENTY_FOUR_H_MS = 24 * 60 * 60 * 1000;
 const FORTY_EIGHT_H_MS = 48 * 60 * 60 * 1000;
@@ -46,12 +58,13 @@ export default async function handler(req, res) {
     const downloadDeadline = uploadedAt + TWENTY_FOUR_H_MS; // user prompted to download within 24h
     const deleteAt         = uploadedAt + FORTY_EIGHT_H_MS; // hard-delete by cron at 48h
 
-    // ── Store metadata in KV so cleanup cron can find & delete the blob ────────
-    // KV TTL = 50h (2h safety buffer after the 48h delete window)
-    await kv.set(
+    // ── Store metadata in Redis so cleanup cron can find & delete the blob ────────
+    // Redis TTL = 50h (2h safety buffer after the 48h delete window)
+    const redis = await getRedis();
+    await redis.set(
       `blob:${memberId}`,
       JSON.stringify({ url: blob.url, name, memberId, uploadedAt, downloadDeadline, deleteAt }),
-      { ex: 50 * 3600 }
+      { EX: 50 * 3600 }
     );
 
     // ── Lazy Cleanup (20% of requests) ──────────────────────────────────────────
@@ -64,11 +77,12 @@ export default async function handler(req, res) {
           const age = now - bUploadedAt;
           if (age >= FORTY_EIGHT_H_MS) {
             await del(b.url);
-            // clean up KV metadata
+            // clean up Redis metadata
             const filenamePart = b.pathname?.split('/')[1] || '';
             const memberIdMatch = filenamePart.match(/^(CAP-PK-[A-Z0-9]{6})/);
             if (memberIdMatch) {
-              await kv.del(`blob:${memberIdMatch[1]}`).catch(() => {});
+              const redis = await getRedis();
+              await redis.del(`blob:${memberIdMatch[1]}`).catch(() => {});
             }
             console.log(`[lazy-cleanup] Deleted ${b.url} (age: ${Math.floor(age / 3600000)}h)`);
           }

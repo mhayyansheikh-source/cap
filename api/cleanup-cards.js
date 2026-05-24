@@ -3,7 +3,19 @@
 // Vercel automatically passes Authorization: Bearer <CRON_SECRET> header.
 
 import { del, list } from '@vercel/blob';
-import { kv } from '@vercel/kv';
+import { createClient } from 'redis';
+
+let redisClient;
+async function getRedis() {
+  if (!redisClient) {
+    redisClient = createClient({
+      url: process.env.KV_URL || process.env.REDIS_URL
+    });
+    redisClient.on('error', (err) => console.error('Redis Client Error', err));
+    await redisClient.connect();
+  }
+  return redisClient;
+}
 
 const FORTY_EIGHT_H_MS = 48 * 60 * 60 * 1000;
 
@@ -35,12 +47,13 @@ export default async function handler(req, res) {
           await del(blob.url);
           deletedBlobs++;
 
-          // Also clean up the KV metadata entry if still present
+          // Also clean up the Redis metadata entry if still present
           // Extract memberId from filename: cards/CAP-PK-XXXXXX-timestamp.png
           const filenamePart = blob.pathname?.split('/')[1] || '';
           const memberIdMatch = filenamePart.match(/^(CAP-PK-[A-Z0-9]{6})/);
           if (memberIdMatch) {
-            await kv.del(`blob:${memberIdMatch[1]}`).catch(() => {});
+            const redis = await getRedis();
+            await redis.del(`blob:${memberIdMatch[1]}`).catch(() => {});
           }
 
           console.log(`[cleanup] Deleted ${blob.url} (age: ${Math.floor(age / 3600000)}h)`);

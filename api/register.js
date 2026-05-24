@@ -3,10 +3,22 @@
 // POST /api/register → { ok: true, memberId, serial, count }
 
 import { sql } from '@vercel/postgres';
-import { kv } from '@vercel/kv';
+import { createClient } from 'redis';
 
 const KV_KEY = 'cap_reg_count_v2';
 const BASELINE = 0;
+
+let redisClient;
+async function getRedis() {
+  if (!redisClient) {
+    redisClient = createClient({
+      url: process.env.KV_URL || process.env.REDIS_URL
+    });
+    redisClient.on('error', (err) => console.error('Redis Client Error', err));
+    await redisClient.connect();
+  }
+  return redisClient;
+}
 
 // Ensure the registrations table exists (runs only on cold start if table is missing)
 async function ensureTable() {
@@ -97,14 +109,15 @@ export default async function handler(req, res) {
     `;
     const insertedSerial = parseInt(insertRes.rows[0].id, 10);
 
-    // --- Atomically increment counter in KV ---
+    // --- Atomically increment counter in Redis ---
     let newCount = insertedSerial;
     try {
-      let current = await kv.get(KV_KEY);
-      if (current === null || current === undefined) await kv.set(KV_KEY, BASELINE);
-      newCount = await kv.incr(KV_KEY);
+      const redis = await getRedis();
+      let current = await redis.get(KV_KEY);
+      if (current === null || current === undefined) await redis.set(KV_KEY, String(BASELINE));
+      newCount = await redis.incr(KV_KEY);
     } catch (kvErr) {
-      console.warn('[CAP KV Register Error] KV increment failed, falling back to database serial ID:', kvErr.message);
+      console.warn('[CAP Redis Register Error] Redis increment failed, falling back to database serial ID:', kvErr.message);
       newCount = insertedSerial;
     }
 
