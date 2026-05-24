@@ -3911,3 +3911,7 @@ body.splash-active {
   }
 }
 
+/* Hide elements until user registers */
+.registration-only {
+  display: none !important;
+}

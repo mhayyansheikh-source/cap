@@ -107,6 +107,9 @@ function scrollToManifesto() {
 document.addEventListener('DOMContentLoaded', () => {
   // Check splash screen state first
   checkSplashState();
+
+  // Check registration visibility for mentorship items
+  checkRegistrationVisibility();
   
   // Set up live card sync
   setupLiveCardSync();
@@ -941,6 +944,9 @@ form.addEventListener('submit', async (e) => {
 
       localStorage.setItem('cap_user_registration', JSON.stringify(registrationData));
 
+      // Show mentorship links, fomo bar, and portal section now that user has registered
+      checkRegistrationVisibility();
+
       // Clear form and display success UI with real DB card data
       form.reset();
 
@@ -1466,5 +1472,29 @@ function scrollToRoadmap() {
   const milestonesSection = document.getElementById('milestones-section');
   if (milestonesSection) {
     milestonesSection.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+// Check registration visibility for Mentorship nav link, live portal section, and FOMO bar
+function checkRegistrationVisibility() {
+  const cachedReg = localStorage.getItem('cap_user_registration');
+  let isRegistered = false;
+  if (cachedReg) {
+    const data = JSON.parse(cachedReg);
+    if (data.registered) isRegistered = true;
+  }
+
+  const mentorshipNav = document.getElementById('nav-item-mentorship');
+  const livePortal = document.getElementById('live-meeting-portal');
+  const fomoBar = document.getElementById('top-fomo-bar');
+
+  if (isRegistered) {
+    if (mentorshipNav) mentorshipNav.classList.remove('registration-only');
+    if (livePortal) livePortal.classList.remove('registration-only');
+    if (fomoBar) fomoBar.classList.remove('registration-only');
+  } else {
+    if (mentorshipNav) mentorshipNav.classList.add('registration-only');
+    if (livePortal) livePortal.classList.add('registration-only');
+    if (fomoBar) fomoBar.classList.add('registration-only');
   }
 }
