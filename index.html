@@ -100,12 +100,9 @@
         <h3 class="step-heading" style="margin-top: 0.75rem; font-family: 'Sora', sans-serif; font-size: 1.35rem; font-weight: 700; color: var(--pure-white);">Watch the Recruitment Briefing</h3>
       </div>
       
-      <div class="video-container" style="position: relative; width: 100%; max-width: 280px; margin: 0 auto 1.5rem auto; aspect-ratio: 9/16; border-radius: var(--border-radius-md); overflow: hidden; border: 2px solid var(--border-neon); box-shadow: 0 0 20px rgba(0, 255, 102, 0.2);">
-        <iframe id="splash-video-iframe" src="https://www.youtube.com/embed/ax0lldI0r40?autoplay=0&rel=0&modestbranding=1" 
-                style="position: absolute; top:0; left:0; width:100%; height:100%; border:none;" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
-        </iframe>
+      <div class="video-container" style="position: relative; width: 100%; max-width: 280px; margin: 0 auto 1.5rem auto; aspect-ratio: 9/16; border-radius: var(--border-radius-md); overflow: hidden; border: 2px solid var(--border-neon); box-shadow: 0 0 20px rgba(0, 255, 102, 0.2); background: #000;">
+        <video id="splash-video" src="assets/briefing.mp4" playsinline loop style="position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; border:none;"></video>
+        <button id="video-unmute-btn" aria-label="Unmute video sound" style="position: absolute; bottom: 10px; right: 10px; z-index: 10; background: rgba(0,0,0,0.6); border: 1px solid var(--border-neon); color: var(--neon-green); border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem; box-shadow: 0 0 10px rgba(0,255,102,0.3); transition: all 0.2s;">🔇</button>
       </div>
 
       <div style="text-align: center;">

@@ -11,7 +11,48 @@ window.addEventListener('scroll', () => {
 // Splash Screen Logic
 const splashOverlay = document.getElementById('video-splash-overlay');
 const btnEnter = document.getElementById('btn-enter-site');
-const splashIframe = document.getElementById('splash-video-iframe');
+const splashVideo = document.getElementById('splash-video');
+const videoUnmuteBtn = document.getElementById('video-unmute-btn');
+
+function initSplashVideo() {
+  if (!splashVideo) return;
+
+  const cachedReg = localStorage.getItem('cap_user_registration');
+  const splashSeen = sessionStorage.getItem('cap_splash_seen') === 'true';
+  const isRegistered = cachedReg ? JSON.parse(cachedReg).registered : false;
+
+  if (isRegistered || splashSeen) return;
+
+  // Attempt to autoplay with sound
+  splashVideo.play()
+    .then(() => {
+      console.log("[CAP] Video autoplay with sound succeeded!");
+      if (videoUnmuteBtn) {
+        videoUnmuteBtn.textContent = '🔊';
+      }
+    })
+    .catch(err => {
+      console.log("[CAP] Autoplay with sound blocked. Falling back to muted autoplay...", err.message);
+      splashVideo.muted = true;
+      splashVideo.play().catch(e => console.error("[CAP] Muted autoplay also failed:", e));
+      if (videoUnmuteBtn) {
+        videoUnmuteBtn.textContent = '🔇';
+      }
+    });
+
+  // Wire up unmute/mute toggle button
+  if (videoUnmuteBtn) {
+    videoUnmuteBtn.addEventListener('click', () => {
+      if (splashVideo.muted) {
+        splashVideo.muted = false;
+        videoUnmuteBtn.textContent = '🔊';
+      } else {
+        splashVideo.muted = true;
+        videoUnmuteBtn.textContent = '🔇';
+      }
+    });
+  }
+}
 
 function checkSplashState() {
   const cachedReg = localStorage.getItem('cap_user_registration');
@@ -32,6 +73,7 @@ function checkSplashState() {
     document.body.classList.remove('splash-active');
   } else {
     document.body.classList.add('splash-active');
+    initSplashVideo();
   }
 }
 
@@ -41,9 +83,9 @@ function dismissSplash() {
   document.body.classList.remove('splash-active');
   sessionStorage.setItem('cap_splash_seen', 'true');
   
-  // Stop YouTube video playback by resetting the iframe src
-  if (splashIframe) {
-    splashIframe.src = splashIframe.src;
+  // Pause the native video player
+  if (splashVideo) {
+    splashVideo.pause();
   }
 }
 
@@ -250,6 +292,11 @@ function updateActiveTierDisplay() {
         cardStatusEl.style.color = 'var(--neon-green)';
       }
     }
+  }
+
+  // Keep founder-card gold theme in sync with current tier
+  if (typeof updateFounderCardClass === 'function') {
+    updateFounderCardClass();
   }
 }
 
@@ -521,10 +568,51 @@ const SKILL_MAP = {
   'learning':       'Youth Learner'
 };
 
+// ─── Card Reveal Animation ────────────────────────────────────────────────────
+// Reveals the card column with a 3D flip-in animation when user starts typing
+function updateCardVisibility() {
+  const cardColumn = document.querySelector('.registration-card-column');
+  if (!cardColumn) return;
+
+  const nameInput = document.getElementById('full-name');
+  const citySelect = document.getElementById('city');
+  const skillSelect = document.getElementById('digital-skill');
+  const photoInput = document.getElementById('profile-photo');
+
+  const hasName  = nameInput  && nameInput.value.trim().length > 0;
+  const hasCity  = citySelect && citySelect.value !== '';
+  const hasSkill = skillSelect && skillSelect.value !== '';
+  const hasPhoto = photoInput && photoInput.files && photoInput.files.length > 0;
+
+  const shouldReveal = hasName || hasCity || hasSkill || hasPhoto;
+
+  if (shouldReveal) {
+    cardColumn.classList.add('revealed');
+  }
+  // Once revealed, never hide again during session (user already started filling)
+}
+
+// ─── Founder Card Class Toggle ────────────────────────────────────────────────
+// Applies the cyber-gold founder-card theme when the active tier is a founding tier
+function updateFounderCardClass() {
+  const memberCard = document.getElementById('member-card');
+  if (!memberCard) return;
+
+  const nextSerial = currentCount + 1;
+  const tier = getFoundingTier(nextSerial);
+
+  if (tier.isFounding) {
+    memberCard.classList.add('founder-card');
+  } else {
+    memberCard.classList.remove('founder-card');
+  }
+}
+
 function setupLiveCardSync() {
   const nameInput = document.getElementById('full-name');
   const citySelect = document.getElementById('city');
   const skillSelect = document.getElementById('digital-skill');
+  const photoInput = document.getElementById('profile-photo');
 
   const cardName = document.getElementById('card-display-name');
   const cardCity = document.getElementById('card-display-city');
@@ -534,6 +622,7 @@ function setupLiveCardSync() {
     nameInput.addEventListener('input', () => {
       const val = nameInput.value.trim();
       cardName.textContent = val || 'Your Name';
+      updateCardVisibility();
     });
   }
 
@@ -541,6 +630,7 @@ function setupLiveCardSync() {
     citySelect.addEventListener('change', () => {
       const val = citySelect.value;
       cardCity.textContent = val || 'Your City';
+      updateCardVisibility();
     });
   }
 
@@ -548,8 +638,18 @@ function setupLiveCardSync() {
     skillSelect.addEventListener('change', () => {
       const val = skillSelect.value;
       cardSkill.textContent = SKILL_MAP[val] || 'Your Skill';
+      updateCardVisibility();
     });
   }
+
+  if (photoInput) {
+    photoInput.addEventListener('change', () => {
+      updateCardVisibility();
+    });
+  }
+
+  // Initial founder-card class update on page load
+  updateFounderCardClass();
 }
 
 
@@ -1006,6 +1106,10 @@ function displayRegistrationSuccess(data) {
   // Transition layout to success view
   const layoutContainer = document.getElementById('registration-layout-container');
   if (layoutContainer) layoutContainer.classList.add('is-success');
+
+  // Always reveal the card column immediately in success state
+  const cardColumn = document.querySelector('.registration-card-column');
+  if (cardColumn) cardColumn.classList.add('revealed');
 
   // Change preview badge to official status
   const previewBadge = document.getElementById('card-preview-badge');
