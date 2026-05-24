@@ -134,8 +134,14 @@
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top p-0 flex-column align-items-stretch" id="main-header">
     <!-- Top FOMO Announcement Bar -->
     <div class="top-fomo-bar w-100" id="top-fomo-bar" onclick="scrollToForm()">
-      <div class="fomo-bar-content">
-        <span>🔴 <strong>Live Guidance Every Week:</strong> Free mentorship to build your online business. <strong>Register today to get our free 99-Page Guidance PDF!</strong> 🎁</span>
+      <div class="fomo-bar-content container-fluid d-flex flex-wrap justify-content-center align-items-center gap-2 py-1">
+        <span class="fomo-text text-center">
+          <span class="fomo-live-dot"></span>
+          <strong>CAP Live Meeting:</strong> Weekly (Starting May 25, 10:00 PM PKT)
+        </span>
+        <a href="https://meet.google.com/bxf-jdds-ead" target="_blank" rel="noopener noreferrer" class="fomo-btn" onclick="event.stopPropagation()">
+          Join Meet 🎥
+        </a>
       </div>
     </div>
     <div class="container nav-container py-3">
@@ -575,6 +581,129 @@
           <div class="col-md-4 stat-item">
             <div class="stat-value neon-val">Rs. 0</div>
             <div class="stat-label">Registration Cost</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live Weekly Meeting Portal Section -->
+    <section class="live-meeting-section" id="live-meeting-portal">
+      <div class="container">
+        <div class="section-header text-center mb-5">
+          <div class="badge mb-2">
+            <span class="fomo-live-dot"></span> Live Broadcast
+          </div>
+          <h2 class="section-title text-white">Weekly Live Mentorship & Business Launch</h2>
+          <p class="section-desc text-gray mx-auto" style="max-width: 650px;">
+            Get live weekly guidance to start your online business. We cover product hunting, designing, e-commerce, ads configuration, and SEO completely free of cost.
+          </p>
+        </div>
+
+        <div class="live-portal-card glass p-4 p-md-5 rounded-4 position-relative overflow-hidden">
+          <div class="row align-items-center g-5">
+            <!-- Left Column: Details & CTA -->
+            <div class="col-lg-6">
+              <div class="portal-badge-wrap mb-3">
+                <span class="badge bg-danger text-white border-0 py-1 px-3 rounded-pill fw-bold" style="font-size: 0.75rem; letter-spacing: 0.05em; background-color: #ff3b30 !important;">
+                  🔴 LIVE EVENT
+                </span>
+              </div>
+              <h3 class="portal-heading text-white fw-bold mb-3">CAP - Live Meeting</h3>
+              <p class="portal-text text-gray mb-4">
+                Join our live weekly assembly on Google Meet. Connect with fellow members, get direct feedback from the founders, and launch your freelancing or e-commerce career.
+              </p>
+              
+              <!-- Quick Info Cards -->
+              <div class="portal-info-grid d-flex flex-column gap-3 mb-4">
+                <div class="portal-info-item d-flex align-items-center gap-3 p-3 rounded-3" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: var(--border-radius-sm);">
+                  <div class="info-icon-wrapper fs-4" style="line-height: 1;">📅</div>
+                  <div>
+                    <div class="info-title text-gray fs-7" style="font-size: 0.78rem;">Meeting Schedule</div>
+                    <div class="info-detail text-white fw-bold">Every Monday (Weekly)</div>
+                  </div>
+                </div>
+                <div class="portal-info-item d-flex align-items-center gap-3 p-3 rounded-3" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: var(--border-radius-sm);">
+                  <div class="info-icon-wrapper fs-4" style="line-height: 1;">🕙</div>
+                  <div>
+                    <div class="info-title text-gray fs-7" style="font-size: 0.78rem;">Time & Duration</div>
+                    <div class="info-detail text-white fw-bold">10:00 PM – 11:00 PM</div>
+                  </div>
+                </div>
+                <div class="portal-info-item d-flex align-items-center gap-3 p-3 rounded-3" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: var(--border-radius-sm);">
+                  <div class="info-icon-wrapper fs-4" style="line-height: 1;">🌍</div>
+                  <div>
+                    <div class="info-title text-gray fs-7" style="font-size: 0.78rem;">Time Zone & Validity</div>
+                    <div class="info-detail text-white fw-bold">Asia/Karachi (PKT) • May 25 – Dec 31, 2026</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Buttons -->
+              <div class="portal-actions-group d-flex flex-column flex-sm-row gap-3">
+                <a href="https://meet.google.com/bxf-jdds-ead" target="_blank" rel="noopener noreferrer" class="btn btn-success flex-grow-1 py-3 px-4 fw-bold portal-btn-meet d-flex align-items-center justify-content-center gap-2" style="background: var(--neon-green); border-color: var(--neon-green); color: #050d08; border-radius: 50px;">
+                  🎥 Join Google Meet
+                </a>
+                <a href="https://whatsapp.com/channel/0029VbDOEaQ0bIdur0zNCD1M" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light flex-grow-1 py-3 px-4 fw-semibold portal-btn-whatsapp d-flex align-items-center justify-content-center gap-2" style="border-color: rgba(255,255,255,0.2); border-radius: 50px;">
+                  📢 WhatsApp Announcements
+                </a>
+              </div>
+            </div>
+
+            <!-- Right Column: Benefits Checklist -->
+            <div class="col-lg-6">
+              <div class="benefits-card p-4 rounded-4" style="background: rgba(12, 28, 18, 0.5); border: 1px solid var(--border-neon); box-shadow: 0 0 25px rgba(0, 255, 102, 0.05); border-radius: var(--border-radius-md);">
+                <h4 class="benefits-heading text-white fw-bold mb-3 d-flex align-items-center gap-2" style="font-family: 'Sora', sans-serif;">
+                  <span>🎁</span> Free Weekly Mentorship Benefits
+                </h4>
+                <p class="benefits-lead text-gray mb-4" style="font-size: 0.9rem;">
+                  Weekly interactive training sessions and blueprints designed to get you earning in digital fields:
+                </p>
+                <ul class="benefits-list list-unstyled d-flex flex-column gap-3 mb-0" style="padding-left: 0;">
+                  <li class="d-flex gap-3">
+                    <span class="benefit-bullet text-success">✔</span>
+                    <div>
+                      <strong class="text-white d-block" style="font-size: 0.95rem;">Product Hunting & Sourcing</strong>
+                      <span class="text-gray" style="font-size: 0.88rem;">Find hot e-commerce products with high margins and low competition.</span>
+                    </div>
+                  </li>
+                  <li class="d-flex gap-3">
+                    <span class="benefit-bullet text-success">✔</span>
+                    <div>
+                      <strong class="text-white d-block" style="font-size: 0.95rem;">Graphic Designing & UI/UX</strong>
+                      <span class="text-gray" style="font-size: 0.88rem;">Learn Canva and Adobe Suite to design high-converting visual assets.</span>
+                    </div>
+                  </li>
+                  <li class="d-flex gap-3">
+                    <span class="benefit-bullet text-success">✔</span>
+                    <div>
+                      <strong class="text-white d-block" style="font-size: 0.95rem;">Social Media Marketing & Management</strong>
+                      <span class="text-gray" style="font-size: 0.88rem;">Build viral reach, handle community client pages, and drive traffic.</span>
+                    </div>
+                  </li>
+                  <li class="d-flex gap-3">
+                    <span class="benefit-bullet text-success">✔</span>
+                    <div>
+                      <strong class="text-white d-block" style="font-size: 0.95rem;">Shopify & WooCommerce Setup</strong>
+                      <span class="text-gray" style="font-size: 0.88rem;">Complete website development training to create responsive online stores.</span>
+                    </div>
+                  </li>
+                  <li class="d-flex gap-3">
+                    <span class="benefit-bullet text-success">✔</span>
+                    <div>
+                      <strong class="text-white d-block" style="font-size: 0.95rem;">Complete Search Engine Optimization (SEO)</strong>
+                      <span class="text-gray" style="font-size: 0.88rem;">Master ranking #1 on Google organically to get free customer traffic.</span>
+                    </div>
+                  </li>
+                  <li class="d-flex gap-3">
+                    <span class="benefit-bullet text-success">✔</span>
+                    <div>
+                      <strong class="text-white d-block" style="font-size: 0.95rem;">First Meta & Google Ads Campaign Setup</strong>
+                      <span class="text-gray" style="font-size: 0.88rem;">Deploy and optimize your first paid campaigns live during the session.</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
